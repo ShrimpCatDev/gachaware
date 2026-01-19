@@ -1,6 +1,6 @@
 local conf = {}
 
-conf.gW = 160
+conf.gW = 144
 conf.gH = 128
 
 conf.wW = conf.gW*5
