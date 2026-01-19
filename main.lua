@@ -1,7 +1,7 @@
 require("init")
 
 function love.load()
-    font = require("assets/font/skull")
+    font=lg.newFont("assets/font/monogram-extended.ttf",16)
     lg.setFont(font)
     shove.createLayer("game")
 end
@@ -12,6 +12,5 @@ end
 
 function love.draw()
     beginDraw()
-        lg.print("hello world")
     endDraw()
 end
