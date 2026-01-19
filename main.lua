@@ -13,6 +13,9 @@ function love.load()
     state={
         title=require "scenes/title"
     }
+    shader={
+        trans=lg.newShader("shaders/plasmaTransition.glsl")
+    }
     gs.switch(state.title)
 end
 

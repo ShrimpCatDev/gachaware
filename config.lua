@@ -8,7 +8,7 @@ conf.wH = conf.gH*5
 
 conf.textureFilter = "nearest"
 conf.fit = "aspect"
-conf.render="direct"
+conf.render="layer"
 conf.vsync=true
 
 conf.input={
