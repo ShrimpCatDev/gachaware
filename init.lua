@@ -18,6 +18,8 @@ baton=require 'lib.baton'
 color=require 'lib.hex2color'
 require 'lib.func'
 
+lue=require("lib/lue")
+
 input=baton.new(conf.input)
 
 shove.setResolution(conf.gW,conf.gH,{fitMethod=conf.fit,scalingFilter=conf.textureFilter,renderMode=conf.render})
