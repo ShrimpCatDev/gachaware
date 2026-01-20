@@ -7,7 +7,7 @@ function title:enter()
 
     self.title={x=conf.gW/2,y=conf.gH+50}
     timer.after(1.2,function() 
-        timer.tween(2,self.title,{y=conf.gH/2},"out-elastic")
+        timer.tween(2,self.title,{y=conf.gH/2-16},"out-elastic")
     end)
 end
 
@@ -16,6 +16,18 @@ function title:update(dt)
     shader.trans:send("time",love.timer.getTime()*8)
     shader.wave:send("time",love.timer.getTime()*2)
     shader.trans:send("th",self.prog)
+end
+
+local function sdraw(drawFunction)
+    lg.push()
+    
+    lg.translate(1,1)
+        lg.setColor(0,0,0,0.5)
+        drawFunction()
+    lg.pop()
+
+    lg.setColor(1,1,1,1)
+    drawFunction()
 end
 
 function title:draw()
@@ -41,6 +53,10 @@ function title:draw()
                 lg.setColor(1,1,1,1)
                 lg.draw(assets.image.title,x,y,0,1,1,ox,oy)
             lg.setShader()
+
+            sdraw(function()
+                cprint("press z",conf.gW/2,conf.gH/2+16)
+            end)
     endDraw()
 end
 

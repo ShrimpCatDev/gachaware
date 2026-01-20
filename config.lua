@@ -13,7 +13,7 @@ conf.vsync=true
 
 conf.input={
     controls={
-
+        a={"key:z"}
     },
     pairs={
 
