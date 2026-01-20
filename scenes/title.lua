@@ -5,7 +5,8 @@ function title:enter()
         img = lg.newImage("assets/title/ball-1.png")
     }
     shove.addEffect("game",shader.trans)
-    self.prog=6
+    self.prog=-4
+    timer.tween(1.5,self,{prog=6},"out-cubic")
 end
 
 function title:update(dt)
