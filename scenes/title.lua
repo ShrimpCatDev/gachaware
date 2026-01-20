@@ -1,13 +1,17 @@
 local title={}
 
 function title:enter()
+    timer.clear()
+    self.canAction=false --peak variable name :3 (i need to use comments more)
     shove.addEffect("game",shader.trans)
     self.prog=-4
     timer.tween(1.5,self,{prog=6},"out-cubic")
 
     self.title={x=conf.gW/2,y=conf.gH+50}
     timer.after(1.2,function() 
-        timer.tween(2,self.title,{y=conf.gH/2-16},"out-elastic")
+        timer.tween(2,self.title,{y=conf.gH/2-16},"out-elastic",function()
+            self.canAction=true
+        end)
     end)
 end
 
@@ -16,11 +20,19 @@ function title:update(dt)
     shader.trans:send("time",love.timer.getTime()*8)
     shader.wave:send("time",love.timer.getTime()*2)
     shader.trans:send("th",self.prog)
+
+    if input:pressed("a") and self.canAction then
+        self.canAction=false
+        self.prog=6
+        timer.tween(3,self,{prog=-4},"out-cubic",function()
+        
+        end)
+    end
 end
 
 local function sdraw(drawFunction)
     lg.push()
-    
+
     lg.translate(1,1)
         lg.setColor(0,0,0,0.5)
         drawFunction()
