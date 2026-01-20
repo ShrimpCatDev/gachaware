@@ -1,6 +1,7 @@
 local title={}
 
 function title:enter()
+    self.showText=false
     timer.clear()
     self.canAction=false --peak variable name :3 (i need to use comments more)
     shove.addEffect("game",shader.trans)
@@ -11,6 +12,7 @@ function title:enter()
     timer.after(1.2,function() 
         timer.tween(2,self.title,{y=conf.gH/2-16},"out-elastic",function()
             self.canAction=true
+            self.showText=true
         end)
     end)
 end
@@ -24,7 +26,7 @@ function title:update(dt)
     if input:pressed("a") and self.canAction then
         self.canAction=false
         self.prog=6
-        timer.tween(3,self,{prog=-4},"out-cubic",function()
+        timer.tween(2,self,{prog=-4},"out-cubic",function()
         
         end)
     end
@@ -66,9 +68,11 @@ function title:draw()
                 lg.draw(assets.image.title,x,y,0,1,1,ox,oy)
             lg.setShader()
 
-            sdraw(function()
-                cprint("press z",conf.gW/2,conf.gH/2+16)
-            end)
+            if self.showText then
+                sdraw(function()
+                    cprint("press z",conf.gW/2,conf.gH/2+16)
+                end)
+            end
     endDraw()
 end
 
