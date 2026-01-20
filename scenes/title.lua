@@ -1,9 +1,6 @@
 local title={}
 
 function title:enter()
-    self.ball = {
-        img = lg.newImage("assets/title/ball-1.png")
-    }
     shove.addEffect("game",shader.trans)
     self.prog=-4
     timer.tween(1.5,self,{prog=6},"out-cubic")
@@ -12,12 +9,13 @@ end
 function title:update(dt)
     timer.update(dt)
     shader.trans:send("time",love.timer.getTime()*8)
+    shader.wave:send("time",love.timer.getTime()*2)
     shader.trans:send("th",self.prog)
 end
 
 function title:draw()
     beginDraw()
-            lg.clear(pal:color(0))
+            lg.clear(pal:color(5))
             lg.setColor(1,1,1,1)
 
             local t=love.timer.getTime()
@@ -29,8 +27,16 @@ function title:draw()
                     lg.circle("fill",x*sc+math.cos(t+(x+y)*0.2)*20,y*sc+math.sin(t+(x+y)*0.2)*20,10+math.sin(t+(x+y)*0.8)*5)
                 end
             end
-            lg.setColor(pal:color(0))
-            lg.print("Yes.",1,-3)
+
+            local x,y=conf.gW/2,conf.gH/2
+            local ox,oy=assets.image.title:getWidth()/2,assets.image.title:getHeight()/2
+
+            lg.setShader(shader.wave)
+                lg.setColor(0,0,0,0.5)
+                lg.draw(assets.image.title,x+1,y+1,0,1,1,ox,oy)
+                lg.setColor(1,1,1,1)
+                lg.draw(assets.image.title,x,y,0,1,1,ox,oy)
+            lg.setShader()
     endDraw()
 end
 

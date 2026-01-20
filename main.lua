@@ -1,6 +1,8 @@
 require("init")
 
 function love.load()
+    assets=require("lib/cargo").init("assets")
+
     gs.registerEvents()
     font=lg.newFont("assets/font/monogram-extended.ttf",16)
     lg.setFont(font)
@@ -14,7 +16,8 @@ function love.load()
         title=require "scenes/title"
     }
     shader={
-        trans=lg.newShader("shaders/plasmaTransition.glsl")
+        trans=lg.newShader("shaders/plasmaTransition.glsl"),
+        wave=lg.newShader("shaders/wave.glsl")
     }
     gs.switch(state.title)
 end
