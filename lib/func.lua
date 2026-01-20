@@ -33,3 +33,10 @@ function endDraw()
     shove.endLayer()
     shove.endDraw()
 end
+
+function cprint(t,x,y)
+    local f=love.graphics.getFont()
+    local w=f:getWidth(t)
+    local h=f:getHeight()
+    lg.print(t,x-w/2,y-h/2)
+end

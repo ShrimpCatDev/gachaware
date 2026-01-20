@@ -4,6 +4,11 @@ function title:enter()
     shove.addEffect("game",shader.trans)
     self.prog=-4
     timer.tween(1.5,self,{prog=6},"out-cubic")
+
+    self.title={x=conf.gW/2,y=conf.gH+50}
+    timer.after(1.2,function() 
+        timer.tween(2,self.title,{y=conf.gH/2},"out-elastic")
+    end)
 end
 
 function title:update(dt)
@@ -27,8 +32,7 @@ function title:draw()
                     lg.circle("fill",x*sc+math.cos(t+(x+y)*0.2)*20,y*sc+math.sin(t+(x+y)*0.2)*20,10+math.sin(t+(x+y)*0.8)*5)
                 end
             end
-
-            local x,y=conf.gW/2,conf.gH/2
+            local x,y=self.title.x,self.title.y
             local ox,oy=assets.image.title:getWidth()/2,assets.image.title:getHeight()/2
 
             lg.setShader(shader.wave)
