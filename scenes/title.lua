@@ -1,6 +1,7 @@
 local title={}
 
 function title:enter()
+    shove.clearEffects("game")
     self.showText=false
     timer.clear()
     self.canAction=false --peak variable name :3 (i need to use comments more)
@@ -27,7 +28,7 @@ function title:update(dt)
         self.canAction=false
         self.prog=6
         timer.tween(2,self,{prog=-4},"out-cubic",function()
-        
+            gs.switch(state.menu)
         end)
     end
 end

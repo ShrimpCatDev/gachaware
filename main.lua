@@ -13,13 +13,14 @@ function love.load()
     pal:load("waft")
 
     state={
-        title=require "scenes/title"
+        title=require "scenes/title",
+        menu=require "scenes/menu"
     }
     shader={
         trans=lg.newShader("shaders/plasmaTransition.glsl"),
         wave=lg.newShader("shaders/wave.glsl")
     }
-    gs.switch(state.title)
+    gs.switch(state.menu)
 end
 
 function love.update(dt)
