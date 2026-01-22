@@ -3,7 +3,8 @@ function clamp(x, min, max)
 end
 
 function lerpDt(a, b, t,dt)
-    return a + (b - a) * (t*dt)
+    local f=1-t^dt
+    return a + (b - a) * f
 end
 
 function lerp(a, b, t,dt)
