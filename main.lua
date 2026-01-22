@@ -20,7 +20,7 @@ function love.load()
         trans=lg.newShader("shaders/plasmaTransition.glsl"),
         wave=lg.newShader("shaders/wave.glsl")
     }
-    gs.switch(state.title)
+    gs.switch(state.menu)
 end
 
 function love.update(dt)
@@ -28,5 +28,5 @@ function love.update(dt)
 end 
 
 function love.draw()
-
+    
 end
