@@ -33,18 +33,6 @@ function title:update(dt)
     end
 end
 
-local function sdraw(drawFunction)
-    lg.push()
-
-    lg.translate(1,1)
-        lg.setColor(0,0,0,0.5)
-        drawFunction()
-    lg.pop()
-
-    lg.setColor(1,1,1,1)
-    drawFunction()
-end
-
 function title:draw()
     beginDraw()
             lg.clear(pal:color(5))

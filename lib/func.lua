@@ -41,3 +41,16 @@ function cprint(t,x,y)
     local h=f:getHeight()
     lg.print(t,x-w/2,y-h/2)
 end
+
+function sdraw(drawFunction)
+    local r,g,b,a=lg.getColor()
+    lg.push()
+
+    lg.translate(1,1)
+        lg.setColor(0,0,0,0.5)
+        drawFunction()
+    lg.pop()
+
+    lg.setColor(r,g,b,a)
+    drawFunction()
+end

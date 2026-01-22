@@ -28,3 +28,5 @@ shove.setWindowMode(conf.wW,conf.wH,{resizable=true,vsync=conf.vsync})
 lg.setLineStyle("rough")
 
 timer=require("lib/hump/timer")
+
+talkies=require("lib/talkies")
