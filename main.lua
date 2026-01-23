@@ -27,7 +27,7 @@ function love.load()
     talkies.padding=4
     talkies.rounding=2
     talkies.messageBackgroundColor={pal:color(30)}
-    talkies.titleBackgroundColor={pal:color(6)}
+    talkies.titleBackgroundColor={pal:color(10)}
 
     gs.switch(state.menu)
 end

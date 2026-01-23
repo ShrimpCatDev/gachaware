@@ -1,4 +1,5 @@
 local menu={}
+local infoDlg=require("data/infoDialog")
 
 function menu:enter()
     shove.clearEffects("game")
@@ -33,15 +34,25 @@ function menu:enter()
         gx=-57,
         gy=1,
         items={
-            "- Play!",
-            "Diff: Easy",
-            "Info"
-        }
+            {text="Play!",func=function()
+                
+            end},
+            {text="Diff: Easy",func=function()
+            
+            end},
+            {text="Info",func=function(selection)
+                for k,v in ipairs(infoDlg[selection]) do
+                    talkies.say("Shopkeeper", v)
+                end
+            end}
+        },
+        select=1
     }
     self.machineMenu.len=#self.machineMenu.data
     test={x1=0,x2=0,time=0}
     
 end
+
 
 function menu:update(dt)
     talkies.update(dt)
@@ -73,8 +84,26 @@ function menu:update(dt)
                 if input:pressed("a") then
                     self.machineMenu.gy=self.machineMenu.selectedYPosition
                     self.machineMenu.selected=true
+                    self.gameOptionMenu.select=1
                 end
             else
+                if input:pressed("up") then
+                    self.gameOptionMenu.select=self.gameOptionMenu.select-1
+                    if self.gameOptionMenu.select<1 then
+                        self.gameOptionMenu.select=#self.gameOptionMenu.items
+                    end
+                end
+                if input:pressed("down") then
+                    self.gameOptionMenu.select=self.gameOptionMenu.select+1
+                    if self.gameOptionMenu.select>#self.gameOptionMenu.items then
+                        self.gameOptionMenu.select=1
+                    end
+                end
+                if input:pressed("a") then
+                    print(self.machineMenu.select+1)
+                    self.gameOptionMenu.items[self.gameOptionMenu.select].func(self.machineMenu.select+1)
+                end
+
                 if input:pressed("b") then
                     self.machineMenu.gy=self.machineMenu.defaultYPosition
                     self.machineMenu.selected=false
@@ -128,7 +157,11 @@ function menu:draw()
             lg.setFont(fontDlg)
             lg.print(self.machineMenu.data[self.machineMenu.select+1].name,2,0)
             for k,v in ipairs(self.gameOptionMenu.items) do
-                lg.print(v,2,k*fontDlg:getHeight()+4)
+                if k==self.gameOptionMenu.select then
+                    lg.print("-"..v.text,2,k*fontDlg:getHeight()+4)
+                else
+                    lg.print(v.text,2,k*fontDlg:getHeight()+4)
+                end
             end
             lg.setFont(font)
         lg.pop()
