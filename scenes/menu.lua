@@ -3,13 +3,13 @@ local menu={}
 function menu:enter()
     shove.clearEffects("game")
     timer.clear()
-    shove.addEffect("game",shader.trans)
+    --shove.addEffect("game",shader.trans)
     self.prog=-4
-    self.canAction=false
+    self.canAction=true
     timer.tween(1,self,{prog=6},"out-cubic",function()
         self.canAction=true
         for k,v in ipairs(dialog.test) do
-            talkies.say("Joseph", v)
+            --talkies.say("Joseph", v)
         end
     end)
     self.machineMenu={
@@ -31,7 +31,12 @@ function menu:enter()
         w=56,
         h=conf.gH-2,
         gx=-57,
-        gy=1
+        gy=1,
+        items={
+            "- Play!",
+            "Diff: Easy",
+            "Info"
+        }
     }
     self.machineMenu.len=#self.machineMenu.data
     test={x1=0,x2=0,time=0}
@@ -106,7 +111,7 @@ function menu:draw()
             if x==self.machineMenu.select then
                 lg.setColor(1,1,1,1)
             else
-                lg.setColor(0.8,0.8,0.8,1)
+                lg.setColor(0.7,0.7,0.9,1)
             end
             lg.draw(i,conf.gW/2+x*i:getWidth()+self.machineMenu.sx,self.machineMenu.sy,0,1,1,i:getWidth()/2,0)
         end
@@ -121,7 +126,10 @@ function menu:draw()
             end)
             lg.setColor(pal:color(0))
             lg.setFont(fontDlg)
-            lg.print("Hello world!",2,0)
+            lg.print(self.machineMenu.data[self.machineMenu.select+1].name,2,0)
+            for k,v in ipairs(self.gameOptionMenu.items) do
+                lg.print(v,2,k*fontDlg:getHeight()+4)
+            end
             lg.setFont(font)
         lg.pop()
 

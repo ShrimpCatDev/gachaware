@@ -29,7 +29,7 @@ function love.load()
     talkies.messageBackgroundColor={pal:color(30)}
     talkies.titleBackgroundColor={pal:color(6)}
 
-    gs.switch(state.title)
+    gs.switch(state.menu)
 end
 
 function love.update(dt)
@@ -37,5 +37,17 @@ function love.update(dt)
 end 
 
 function love.draw()
-    
+    lg.clear(pal:color(30))
+    local w,h=love.window.getMode()
+    local n=100
+    local t=love.timer.getTime()*24
+    lg.setColor(pal:color(29))
+    for x=-1,w/n do
+        for y=-1,h/n do
+            if (x+y)%2==0 then
+                lg.draw(assets.image.ballIcon,x*n+(t%n),y*n+(t%n),0,2,2)
+            end
+        end
+    end
+    lg.setColor(1,1,1,1)
 end
