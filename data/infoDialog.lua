@@ -9,7 +9,7 @@ return{
     {
         "Oh gosh...",
         "What even is this",
-        "I dont even remember putting this one here."
+        "I dont even remember putting this one here.",
         "OH I KNOW WHY ITS HERE",
         "The developer must have needed it to test something!",
         "I... think..."
