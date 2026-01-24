@@ -1,13 +1,17 @@
-return{
-    graphics={
-        circle=lg.circle,
-        line=lg.line,
-        rectangle=lg.rectangle,
-        polygon=lg.polygon,
-        draw=lg.draw,
-        print=lg.print
+local gw,gh=conf.gW,conf.gH
 
-    },
+return{
+    lg=lg,
     math=math,
-    print=print
+    print=print,
+    tostring=tostring,
+    pal=pal,
+    input=input,
+    table=table,
+    string=string,
+    conf={
+        gW=gw,
+        gH=gh
+    },
+    timer=timer
 }

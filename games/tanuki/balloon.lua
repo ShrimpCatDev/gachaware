@@ -7,5 +7,6 @@ function update(dt)
 end
 
 function draw()
-    graphics.print("hello world",1,-3)
+    lg.clear(pal:color(18))
+    lg.circle("fill",conf.gW/2,conf.gH/2,32+math.cos(time)*4)
 end
