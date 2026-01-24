@@ -1,12 +1,16 @@
 local menu={}
 local infoDlg=require("data/infoDialog")
 
+function menu:init()
+
+end
+
 function menu:enter()
     shove.clearEffects("game")
     timer.clear()
-    --shove.addEffect("game",shader.trans)
+    shove.addEffect("game",shader.trans)
     self.prog=-4
-    self.canAction=true
+    self.canAction=false
     timer.tween(1,self,{prog=6},"out-cubic",function()
         self.canAction=true
         for k,v in ipairs(dialog.test) do
@@ -131,46 +135,44 @@ function menu:update(dt)
 end
 
 function menu:draw()
-    beginDraw()
-        lg.clear(pal:color(10))
-        lg.draw(assets.image.bg.menuBg)
-        
-        for x=0,self.machineMenu.len-1 do
-            local i=self.machineMenu.data[x+1].img
-            if x==self.machineMenu.select then
-                lg.setColor(1,1,1,1)
-            else
-                lg.setColor(0.7,0.7,0.9,1)
-            end
-            lg.draw(i,conf.gW/2+x*i:getWidth()+self.machineMenu.sx,self.machineMenu.sy,0,1,1,i:getWidth()/2,0)
+    lg.clear(pal:color(10))
+    lg.draw(assets.image.bg.menuBg)
+    
+    for x=0,self.machineMenu.len-1 do
+        local i=self.machineMenu.data[x+1].img
+        if x==self.machineMenu.select then
+            lg.setColor(1,1,1,1)
+        else
+            lg.setColor(0.7,0.7,0.9,1)
         end
+        lg.draw(i,conf.gW/2+x*i:getWidth()+self.machineMenu.sx,self.machineMenu.sy,0,1,1,i:getWidth()/2,0)
+    end
 
-        lg.setColor(pal:color(6))
-        local m=self.gameOptionMenu
+    lg.setColor(pal:color(6))
+    local m=self.gameOptionMenu
 
-        lg.push()
-        lg.translate(m.x,m.y)
-            sdraw(function()
-                lg.rectangle("fill",0,0,m.w,m.h,2,2)
-            end)
-            lg.setColor(pal:color(0))
-            lg.setFont(fontDlg)
-            lg.print(self.machineMenu.data[self.machineMenu.select+1].name,2,0)
-            for k,v in ipairs(self.gameOptionMenu.items) do
-                if k==self.gameOptionMenu.select then
-                    lg.print("-"..v.text,2,k*fontDlg:getHeight()+4)
-                else
-                    lg.print(v.text,2,k*fontDlg:getHeight()+4)
-                end
+    lg.push()
+    lg.translate(m.x,m.y)
+        sdraw(function()
+            lg.rectangle("fill",0,0,m.w,m.h,2,2)
+        end)
+        lg.setColor(pal:color(0))
+        lg.setFont(fontDlg)
+        lg.print(self.machineMenu.data[self.machineMenu.select+1].name,2,0)
+        for k,v in ipairs(self.gameOptionMenu.items) do
+            if k==self.gameOptionMenu.select then
+                lg.print("-"..v.text,2,k*fontDlg:getHeight()+4)
+            else
+                lg.print(v.text,2,k*fontDlg:getHeight()+4)
             end
-            lg.setFont(font)
-        lg.pop()
-
-        lg.setColor(1,1,1,1)
-        cprint(self.machineMenu.data[self.machineMenu.select+1].name,conf.gW/2,self.machineMenu.titleY)
-        talkies.draw()
+        end
         lg.setFont(font)
-    endDraw()
+    lg.pop()
+
+    lg.setColor(1,1,1,1)
+    cprint(self.machineMenu.data[self.machineMenu.select+1].name,conf.gW/2,self.machineMenu.titleY)
+    talkies.draw()
+    lg.setFont(font)
 end
 
 return menu

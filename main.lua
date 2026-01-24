@@ -4,7 +4,10 @@ function love.load()
     dialog=require("data/dialog")
     assets=require("lib/cargo").init("assets")
 
+    local oldDraw=love.draw
     gs.registerEvents()
+    love.draw=oldDraw
+
     fontDlg=lg.newFont("assets/font/Able 5.ttf",9)
     font=lg.newFont("assets/font/monogram-extended.ttf",16)
     lg.setFont(font)
@@ -29,7 +32,7 @@ function love.load()
     talkies.messageBackgroundColor={pal:color(30)}
     talkies.titleBackgroundColor={pal:color(10)}
 
-    gs.switch(state.menu)
+    gs.switch(state.title)
 end
 
 function love.update(dt)
@@ -50,4 +53,8 @@ function love.draw()
         end
     end
     lg.setColor(1,1,1,1)
+    beginDraw()
+        lg.clear(0,0,0,1)
+        gs.draw()
+    endDraw()
 end

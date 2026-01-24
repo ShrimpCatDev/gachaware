@@ -28,6 +28,7 @@ end
 function beginDraw()
     shove.beginDraw()
     shove.beginLayer("game")
+    lg.clear(0,0,0,1)
 end
 
 function endDraw()

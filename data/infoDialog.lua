@@ -4,7 +4,7 @@ return{
         "looks like its about a tanuki...",
         "it has 3 trinkets available",
         "A tanuki, a lavender console... and OOH a shiny blue tanuki! ^.^",
-        "I make customers play this once first because its a good introdution to GachaWare."
+        "I make customers play this one first because its a good introdution to GachaWare."
     },
     {
         "Oh gosh...",
