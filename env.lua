@@ -13,5 +13,7 @@ return{
         gW=gw,
         gH=gh
     },
-    timer=timer
+    timer=timer,
+    lerp=lerpDt,
+    clamp=clamp
 }
