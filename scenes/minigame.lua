@@ -1,7 +1,7 @@
 local mg={}
 
 function mg:enter(prev,game,path,asts)
-    self.assets=asts
+    shove.clearEffects("game")
     timer.clear()
     local p="games/"..path.."/"..game..".lua"
     print(p)
@@ -15,26 +15,42 @@ function mg:enter(prev,game,path,asts)
     setfenv(func,env)
 
     env.time=0
+    env.assets=asts
 
     func()
 
     if env.load then env.load() end
+    self.frozen=true
 
     self.maxTime=5
     self.time=self.maxTime
     self.timeEnable=false
-    timer.after(1,function()
+    timer.after(1.5,function()
         self.timeEnable=true
     end)
+
+    self.rad=20
+    self.tScale=self.rad
+    timer.tween(0.5,self,{tScale=0},"in-linear",function() self.frozen=false end)
 end
 
 function mg:update(dt)
     timer.update(dt)
-    env.time=env.time+dt
-    if self.timeEnable then
-        self.time=self.time-dt
+
+    if not self.frozen then
+        env.time=env.time+dt
+        if self.timeEnable then
+            self.time=self.time-dt
+            if self.time<=0 then
+                self.frozen=true
+                self.tScale=0
+                timer.tween(0.5,self,{tScale=self.rad},"in-linear",function() 
+                    gs.switch(state.minigameIntro)
+                end)
+            end
+        end
+        if env.update then env.update(dt) end
     end
-    if env.update then env.update(dt) end
 end
 
 function mg:draw()
@@ -59,7 +75,16 @@ function mg:draw()
     lg.pop()
 
     lg.setColor(1,1,1,1)
-    lg.print(env.msg)
+    --lg.print(env.msg)
+
+    lg.setColor(0,0,0,1)
+    local rad=20
+    for x=0,conf.gW/rad do
+        for y=0,conf.gW/rad do
+            lg.circle("fill",x*rad,y*rad,self.tScale)
+        end
+    end
+    lg.setColor(1,1,1,1)
 end
 
 return mg

@@ -20,7 +20,8 @@ function love.load()
     state={
         title=require "scenes/title",
         menu=require "scenes/menu",
-        minigame=require "scenes/minigame"
+        minigame=require "scenes/minigame",
+        minigameIntro=require "scenes/minigameIntro"
     }
     shader={
         trans=lg.newShader("shaders/plasmaTransition.glsl"),
@@ -33,7 +34,7 @@ function love.load()
     talkies.messageBackgroundColor={pal:color(30)}
     talkies.titleBackgroundColor={pal:color(10)}
 
-    gs.switch(state.minigame,"balloon","tanuki")
+    gs.switch(state.menu)
 end
 
 function love.update(dt)

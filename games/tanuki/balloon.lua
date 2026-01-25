@@ -11,4 +11,5 @@ end
 function draw()
     lg.clear(pal:color(18))
     lg.circle("fill",conf.gW/2,conf.gH/2,32+math.cos(time)*4)
+    lg.draw(assets.test,0,0)
 end

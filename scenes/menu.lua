@@ -6,6 +6,9 @@ function menu:init()
 end
 
 function menu:enter()
+    self.tScale=0
+    self.rad=20
+
     shove.clearEffects("game")
     timer.clear()
     shove.addEffect("game",shader.trans)
@@ -38,8 +41,14 @@ function menu:enter()
         gx=-57,
         gy=1,
         items={
-            {text="Play!",func=function()
-                
+            {text="Play!",func=function(selection)
+                self.frozen=true
+                self.canAction=false
+                self.prog=6
+                timer.tween(1,self,{prog=-4},"out-cubic",function()
+                    local g=self.machineMenu.data[selection].id
+                    gs.switch(state.minigameIntro,true,g)
+                end)
             end},
             {text="Diff: Easy",func=function()
             
@@ -54,84 +63,87 @@ function menu:enter()
     }
     self.machineMenu.len=#self.machineMenu.data
     test={x1=0,x2=0,time=0}
+    self.frozen=false
     
 end
 
 
 function menu:update(dt)
-    talkies.update(dt)
     timer.update(dt)
     shader.trans:send("time",love.timer.getTime()*8)
     shader.trans:send("th",self.prog)
 
-    if self.canAction then
-        if talkies.isOpen() then
-            if input:pressed("a") then
-                talkies.onAction()
-            end
-        else
-            --[[if input:pressed("a") then
-                self.canAction=false
-                self.prog=6
-                timer.tween(2,self,{prog=-4},"out-cubic",function()
-                    gs.switch(state.title)
-                end)
-            end]]
-            
-            if self.machineMenu.selected==false then
-                if input:pressed("right") and self.machineMenu.select<self.machineMenu.len-1 then
-                    self.machineMenu.select=self.machineMenu.select+1
-                end
-                if input:pressed("left") and self.machineMenu.select>0 then
-                    self.machineMenu.select=self.machineMenu.select-1
-                end
+    if not self.frozen then
+        talkies.update(dt)
+        if self.canAction then
+            if talkies.isOpen() then
                 if input:pressed("a") then
-                    self.machineMenu.gy=self.machineMenu.selectedYPosition
-                    self.machineMenu.selected=true
-                    self.gameOptionMenu.select=1
+                    talkies.onAction()
                 end
             else
-                if input:pressed("up") then
-                    self.gameOptionMenu.select=self.gameOptionMenu.select-1
-                    if self.gameOptionMenu.select<1 then
-                        self.gameOptionMenu.select=#self.gameOptionMenu.items
+                --[[if input:pressed("a") then
+                    self.canAction=false
+                    self.prog=6
+                    timer.tween(2,self,{prog=-4},"out-cubic",function()
+                        gs.switch(state.title)
+                    end)
+                end]]
+                
+                if self.machineMenu.selected==false then
+                    if input:pressed("right") and self.machineMenu.select<self.machineMenu.len-1 then
+                        self.machineMenu.select=self.machineMenu.select+1
                     end
-                end
-                if input:pressed("down") then
-                    self.gameOptionMenu.select=self.gameOptionMenu.select+1
-                    if self.gameOptionMenu.select>#self.gameOptionMenu.items then
+                    if input:pressed("left") and self.machineMenu.select>0 then
+                        self.machineMenu.select=self.machineMenu.select-1
+                    end
+                    if input:pressed("a") then
+                        self.machineMenu.gy=self.machineMenu.selectedYPosition
+                        self.machineMenu.selected=true
                         self.gameOptionMenu.select=1
                     end
-                end
-                if input:pressed("a") then
-                    print(self.machineMenu.select+1)
-                    self.gameOptionMenu.items[self.gameOptionMenu.select].func(self.machineMenu.select+1)
-                end
+                else
+                    if input:pressed("up") then
+                        self.gameOptionMenu.select=self.gameOptionMenu.select-1
+                        if self.gameOptionMenu.select<1 then
+                            self.gameOptionMenu.select=#self.gameOptionMenu.items
+                        end
+                    end
+                    if input:pressed("down") then
+                        self.gameOptionMenu.select=self.gameOptionMenu.select+1
+                        if self.gameOptionMenu.select>#self.gameOptionMenu.items then
+                            self.gameOptionMenu.select=1
+                        end
+                    end
+                    if input:pressed("a") then
+                        print(self.machineMenu.select+1)
+                        self.gameOptionMenu.items[self.gameOptionMenu.select].func(self.machineMenu.select+1)
+                    end
 
-                if input:pressed("b") then
-                    self.machineMenu.gy=self.machineMenu.defaultYPosition
-                    self.machineMenu.selected=false
+                    if input:pressed("b") then
+                        self.machineMenu.gy=self.machineMenu.defaultYPosition
+                        self.machineMenu.selected=false
+                    end
                 end
             end
         end
+
+        if self.machineMenu.selected then
+            self.machineMenu.titleY=lerpDt(self.machineMenu.titleY,-8,0.00025,dt)
+            self.machineMenu.gx=-self.machineMenu.select*assets.image.gachaMachineBase:getWidth()+(assets.image.gachaMachineBase:getWidth()/2)-20
+            self.gameOptionMenu.gx=1
+        else
+            self.machineMenu.titleY=lerpDt(self.machineMenu.titleY,4,0.00025,dt)
+            self.machineMenu.gx=-self.machineMenu.select*assets.image.gachaMachineBase:getWidth()
+            self.gameOptionMenu.gx=-self.gameOptionMenu.w-1
+        end
+
+        self.machineMenu.select=clamp(self.machineMenu.select,0,self.machineMenu.len-1)
+
+        self.machineMenu.sy=lerpDt(self.machineMenu.sy,self.machineMenu.gy,0.0005,dt)
+        self.machineMenu.sx=lerpDt(self.machineMenu.sx,self.machineMenu.gx,0.0005,dt)
+        self.gameOptionMenu.x=lerpDt(self.gameOptionMenu.x,self.gameOptionMenu.gx,0.000025,dt)
+        self.gameOptionMenu.y=lerpDt(self.gameOptionMenu.y,self.gameOptionMenu.gy,0.000025,dt)
     end
-
-    if self.machineMenu.selected then
-        self.machineMenu.titleY=lerpDt(self.machineMenu.titleY,-8,0.00025,dt)
-        self.machineMenu.gx=-self.machineMenu.select*assets.image.gachaMachineBase:getWidth()+(assets.image.gachaMachineBase:getWidth()/2)-20
-        self.gameOptionMenu.gx=1
-    else
-        self.machineMenu.titleY=lerpDt(self.machineMenu.titleY,4,0.00025,dt)
-        self.machineMenu.gx=-self.machineMenu.select*assets.image.gachaMachineBase:getWidth()
-        self.gameOptionMenu.gx=-self.gameOptionMenu.w-1
-    end
-
-    self.machineMenu.select=clamp(self.machineMenu.select,0,self.machineMenu.len-1)
-
-    self.machineMenu.sy=lerpDt(self.machineMenu.sy,self.machineMenu.gy,0.0005,dt)
-    self.machineMenu.sx=lerpDt(self.machineMenu.sx,self.machineMenu.gx,0.0005,dt)
-    self.gameOptionMenu.x=lerpDt(self.gameOptionMenu.x,self.gameOptionMenu.gx,0.000025,dt)
-    self.gameOptionMenu.y=lerpDt(self.gameOptionMenu.y,self.gameOptionMenu.gy,0.000025,dt)
 end
 
 function menu:draw()
@@ -173,6 +185,14 @@ function menu:draw()
     cprint(self.machineMenu.data[self.machineMenu.select+1].name,conf.gW/2,self.machineMenu.titleY)
     talkies.draw()
     lg.setFont(font)
+
+    lg.setColor(0,0,0,1)
+    local rad=20
+    for x=0,conf.gW/rad do
+        for y=0,conf.gW/rad do
+            lg.circle("fill",x*rad,y*rad,self.tScale)
+        end
+    end
 end
 
 return menu
