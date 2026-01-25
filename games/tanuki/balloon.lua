@@ -1,3 +1,5 @@
+msg="Pop!"
+
 function load()
 
 end
