@@ -15,5 +15,9 @@ return{
     },
     timer=timer,
     lerp=lerpDt,
-    clamp=clamp
+    clamp=clamp,
+    pairs=pairs,
+    ipairs=ipairs,
+    anim8=anim8,
+    col=collision
 }

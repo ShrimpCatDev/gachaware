@@ -65,13 +65,14 @@ function mg:draw()
 
     local r=3
 
+    lg.setColor(0,0,0,1)
+    lg.rectangle("fill",0,conf.gH-8,conf.gW,8)
     lg.push()
     lg.translate(1,conf.gH-h-1)
         lg.setColor(pal:color(29))
         lg.rectangle("fill",0,0,max,h,r,r)
         lg.setColor(pal:color(12))
         lg.rectangle("fill",0,0,c,h,r,r)
-        lg.setColor(pal:color(4))
     lg.pop()
 
     lg.setColor(1,1,1,1)

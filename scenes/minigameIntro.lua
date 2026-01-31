@@ -1,10 +1,25 @@
 local intro={}
 
+local function getNames(path)
+    local n={}
+    local files=love.filesystem.getDirectoryItems("games/"..path)
+    for k,v in ipairs(files) do
+        local name=v:match("^(.+)%.lua$")
+        table.insert(n,name)
+    end
+    return n
+end
+
 function intro:enter(prev,firstTime,id)
     shove.clearEffects("game")
+
     if id then self.id=id end
     if firstTime then
         self.gameAssets=require("lib/cargo").init("games/"..self.id.."/assets")
+        self.games=getNames(self.id)
+        for k,v in ipairs(self.games) do
+            print(v)
+        end
     end
 
     self.tScale=20
@@ -12,11 +27,20 @@ function intro:enter(prev,firstTime,id)
 
     timer.tween(0.5,self,{tScale=0},"in-linear")
 
-    timer.after(2,function()
-        timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
-            gs.switch(state.minigame,"balloon",self.id,self.gameAssets)
+    if #self.games>=1 then
+        local g=table.remove(self.games,math.random(1,#self.games))
+        timer.after(2,function()
+            timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
+                gs.switch(state.minigame,g,self.id,self.gameAssets)
+            end)
         end)
-    end)
+    else
+        timer.after(2,function()
+            timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
+                gs.switch(state.menu)
+            end)
+        end)
+    end
     
     --[[timer.after(1,function()
         timer.tween(1,self,{tScale=self.rad},"in-linear",function()
