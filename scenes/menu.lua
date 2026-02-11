@@ -50,9 +50,9 @@ function menu:enter()
                     gs.switch(state.minigameIntro,true,g)
                 end)
             end},
-            {text="Diff: Easy",func=function()
+            --[[{text="Credits",func=function()
             
-            end},
+            end},]]
             {text="Info",func=function(selection)
                 for k,v in ipairs(infoDlg[selection]) do
                     talkies.say("Shopkeeper", v)
@@ -147,8 +147,16 @@ function menu:update(dt)
 end
 
 function menu:draw()
-    lg.clear(pal:color(10))
-    lg.draw(assets.image.bg.menuBg)
+    lg.clear(pal:color(9))
+    lg.setColor(pal:color(10))
+    local s=16
+    local rep=math.floor(conf.gW/s)+1
+    for y=0,rep do
+        for x=0,rep do 
+            lg.circle("fill",(((x*s)+(-lt.getTime()*16))%(conf.gW+32))-16,(((y*s)+(-lt.getTime()*16))%(conf.gW+32))-16,math.cos(lt.getTime()*2+((x-y)*0.5))*8+8)
+        end
+    end
+    --lg.draw(assets.image.bg.menuBg)
     
     for x=0,self.machineMenu.len-1 do
         local i=self.machineMenu.data[x+1].img
@@ -166,7 +174,7 @@ function menu:draw()
     lg.push()
     lg.translate(m.x,m.y)
         sdraw(function()
-            lg.rectangle("fill",0,0,m.w,m.h,2,2)
+            lg.rectangle("fill",0,0,m.w,#m.items*font:getHeight()+6,2,2)
         end)
         lg.setColor(pal:color(0))
         lg.setFont(fontDlg)
