@@ -43,7 +43,7 @@ function draw()
         i=assets.paint.tanukiFlash
         y=y+math.cos(time*32)*2
     end
-    lg.draw(i,conf.gW+ta.x,y,0,1,1,i:getWidth(),i:getHeight()/2)
+    lg.draw(i,math.floor(conf.gW+ta.x),math.floor(y),0,1,1,i:getWidth(),i:getHeight()/2)
     lg.setColor(1,1,1,flash.v)
     lg.rectangle("fill",0,0,conf.gW,conf.gH)
     lg.setColor(1,1,1,1)

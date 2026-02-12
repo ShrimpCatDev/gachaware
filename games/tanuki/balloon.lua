@@ -3,6 +3,7 @@ icons={3,4}
 color=21
 
 function load()
+    win=false
     pl={
         x=16,
         y=32,
@@ -30,6 +31,7 @@ function update(dt)
             pl.img=2
         end
     else
+        win=true
         pl.img=3
     end
 end
