@@ -14,6 +14,21 @@ function intro:enter(prev,firstTime,id,win)
     shove.clearEffects("game")
 
     if id then self.id=id end
+    local p="minigameIntros/"..self.id..".lua"
+
+    local code,size=love.filesystem.read(p)
+
+    func,err=loadstring(code)
+    if not func then error(err) end
+
+    env=require("env")
+    env.assets=require("lib/cargo").init("minigameIntros/assets/"..self.id)
+    setfenv(func,env)
+
+    env.time=0
+
+    func()
+
     if firstTime then
         self.gameAssets=require("lib/cargo").init("games/"..self.id.."/assets")
         self.games=getNames(self.id)
@@ -22,12 +37,15 @@ function intro:enter(prev,firstTime,id,win)
         end
     else
         self.win=win
+        env.win=win
     end
 
     self.tScale=20
     self.rad=20
 
     timer.tween(0.5,self,{tScale=0},"in-linear")
+
+    if env.load then env.load() end
 
     if #self.games>=1 then
         local g=table.remove(self.games,math.random(1,#self.games))
@@ -55,11 +73,14 @@ end
 
 function intro:update(dt)
     timer.update(dt)
+    if env.update then env.update(dt) end
 end
 
 function intro:draw()
-    lg.clear(pal:color(10))
-    lg.print("This is good intro screen.",1,-3)
+    lg.setColor(1,1,1,1)
+    if env.draw then env.draw() end
+
+    
     lg.setColor(0,0,0,1)
     local rad=20
     for x=0,conf.gW/rad do
@@ -68,7 +89,7 @@ function intro:draw()
         end
     end
     lg.setColor(1,1,1,1)
-    lg.print(tostring(self.win),0,8)
+    --lg.print(tostring(self.win),0,8)
 end
 
 return intro
