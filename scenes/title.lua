@@ -16,10 +16,12 @@ function title:enter()
             self.showText=true
         end)
     end)
+    music:beginMusic(assets.music.title,1)
 end
 
 function title:update(dt)
     timer.update(dt)
+    music:update()
     shader.trans:send("time",love.timer.getTime()*8)
     shader.wave:send("time",love.timer.getTime()*2)
     shader.trans:send("th",self.prog)
@@ -27,6 +29,7 @@ function title:update(dt)
     if input:pressed("a") and self.canAction then
         self.canAction=false
         self.prog=6
+        music:endMusic(1)
         timer.tween(2,self,{prog=-4},"out-cubic",function()
             gs.switch(state.menu)
         end)

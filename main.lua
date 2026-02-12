@@ -1,6 +1,7 @@
 require("init")
 
 function love.load()
+    music=require("lib/music")
     dialog=require("data/dialog")
     assets=require("lib/cargo").init("assets")
 
@@ -39,7 +40,7 @@ function love.load()
         table.insert(icons,lg.newQuad(x*6,0,6,6,assets.image.buttons:getWidth(),assets.image.buttons:getHeight()))
     end
 
-    gs.switch(state.menu)
+    gs.switch(state.title)
 end
 
 function love.update(dt)
