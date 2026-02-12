@@ -32,7 +32,6 @@ function update(dt)
             
         end
     end
-    print(flash.flashed and ta.out)
 end
 
 function draw()

@@ -47,7 +47,7 @@ function menu:enter()
                 self.prog=6
                 timer.tween(1,self,{prog=-4},"out-cubic",function()
                     local g=self.machineMenu.data[selection].id
-                    gs.switch(state.minigameIntro,true,g)
+                    gs.switch(state.minigameIntro,{firstTime=true,id=g})
                 end)
             end},
             --[[{text="Credits",func=function()

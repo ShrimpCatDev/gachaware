@@ -10,10 +10,10 @@ local function getNames(path)
     return n
 end
 
-function intro:enter(prev,firstTime,id,win)
+function intro:enter(prev,data)--firstTime,id,win)
     shove.clearEffects("game")
 
-    if id then self.id=id end
+    if data.id then self.id=data.id end
     local p="minigameIntros/"..self.id..".lua"
 
     local code,size=love.filesystem.read(p)
@@ -29,15 +29,15 @@ function intro:enter(prev,firstTime,id,win)
 
     func()
 
-    if firstTime then
+    if data.firstTime then
         self.gameAssets=require("lib/cargo").init("games/"..self.id.."/assets")
         self.games=getNames(self.id)
         for k,v in ipairs(self.games) do
             print(v)
         end
     else
-        self.win=win
-        env.win=win
+        self.win=data.win
+        env.win=data.win
     end
 
     self.tScale=20
