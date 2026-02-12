@@ -1,4 +1,6 @@
 msg="Flash!"
+icons={1,2}
+color=6
 
 function load()
     win=false

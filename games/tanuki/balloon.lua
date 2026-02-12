@@ -1,4 +1,6 @@
 msg="Pop!"
+icons={3,4}
+color=21
 
 function load()
     pl={

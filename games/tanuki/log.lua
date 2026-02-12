@@ -1,4 +1,6 @@
 msg="Jump!"
+icons={1}
+color=21
 
 function load()
     t=0
@@ -22,6 +24,7 @@ function update(dt)
             v.x=v.x-spd*dt
             if col(v.x,v.y,pl.x,pl.y,v.w,v.h,pl.w,pl.h) then
                 die=true
+                win=false
                 pl.vy=-50
                 pl.current=pl.die
             end

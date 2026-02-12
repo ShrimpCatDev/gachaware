@@ -34,6 +34,11 @@ function love.load()
     talkies.messageBackgroundColor={pal:color(30)}
     talkies.titleBackgroundColor={pal:color(10)}
 
+    icons={}
+    for x=0,(assets.image.buttons:getWidth()/6)-1 do
+        table.insert(icons,lg.newQuad(x*6,0,6,6,assets.image.buttons:getWidth(),assets.image.buttons:getHeight()))
+    end
+
     gs.switch(state.menu)
 end
 

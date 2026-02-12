@@ -10,7 +10,7 @@ local function getNames(path)
     return n
 end
 
-function intro:enter(prev,firstTime,id)
+function intro:enter(prev,firstTime,id,win)
     shove.clearEffects("game")
 
     if id then self.id=id end
@@ -20,6 +20,8 @@ function intro:enter(prev,firstTime,id)
         for k,v in ipairs(self.games) do
             print(v)
         end
+    else
+        self.win=win
     end
 
     self.tScale=20
@@ -66,6 +68,7 @@ function intro:draw()
         end
     end
     lg.setColor(1,1,1,1)
+    lg.print(tostring(self.win),0,8)
 end
 
 return intro

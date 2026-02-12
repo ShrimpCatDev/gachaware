@@ -32,6 +32,7 @@ function mg:enter(prev,game,path,asts)
     self.rad=20
     self.tScale=self.rad
     timer.tween(0.5,self,{tScale=0},"in-linear",function() self.frozen=false end)
+    self.ico=env.icons
 end
 
 function mg:update(dt)
@@ -45,7 +46,7 @@ function mg:update(dt)
                 self.frozen=true
                 self.tScale=0
                 timer.tween(0.5,self,{tScale=self.rad},"in-linear",function() 
-                    gs.switch(state.minigameIntro)
+                    gs.switch(state.minigameIntro,false,nil,env.win)
                 end)
             end
         end
@@ -75,7 +76,16 @@ function mg:draw()
         lg.rectangle("fill",0,0,c,h,r,r)
     lg.pop()
 
+    local ox,oy=1,1
+    local w=7
+    lg.setColor(pal:color(env.color or 6))
+    lg.rectangle("fill",ox,oy,(#self.ico*w)+font:getWidth(env.msg)+4,10,2,2)
+
     lg.setColor(1,1,1,1)
+    for i=1,#self.ico do
+        lg.draw(assets.image.buttons,icons[self.ico[i]],(i-1)*w+ox+1,oy+2)
+    end
+    lg.print(env.msg,ox+3+(#self.ico*w),oy-3)
     --lg.print(env.msg)
 
     lg.setColor(0,0,0,1)
