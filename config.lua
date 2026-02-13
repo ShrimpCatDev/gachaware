@@ -18,7 +18,8 @@ conf.input={
         up={"key:up"},
         down={"key:down"},
         left={"key:left"},
-        right={"key:right"}
+        right={"key:right"},
+        exit={"key:escape"}
     },
     pairs={
 

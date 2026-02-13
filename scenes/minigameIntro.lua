@@ -80,6 +80,8 @@ function intro:draw()
     lg.setColor(1,1,1,1)
     if env.draw then env.draw() end
 
+    --lg.setColor(1,1,1,1)
+    --pause:draw()
     
     lg.setColor(0,0,0,1)
     local rad=20

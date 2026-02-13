@@ -16,6 +16,7 @@ function mg:enter(prev,game,path,asts)
 
     env.time=0
     env.assets=asts
+    env.timer=require("lib.hump.timer")
 
     func()
 
@@ -33,12 +34,16 @@ function mg:enter(prev,game,path,asts)
     self.tScale=self.rad
     timer.tween(0.5,self,{tScale=0},"in-linear",function() self.frozen=false end)
     self.ico=env.icons
+    pause=require("pause")
+    pause:init("game",self)
 end
 
 function mg:update(dt)
+    pause:update(dt)
     timer.update(dt)
 
-    if not self.frozen then
+    if not self.frozen and not pause.open then
+        env.timer.update(dt)
         env.time=env.time+dt
         if self.timeEnable then
             self.time=self.time-dt
@@ -87,6 +92,8 @@ function mg:draw()
     end
     lg.print(env.msg,ox+3+(#self.ico*w),oy-3)
     --lg.print(env.msg)
+
+    pause:draw()
 
     lg.setColor(0,0,0,1)
     local rad=20

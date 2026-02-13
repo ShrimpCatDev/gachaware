@@ -40,7 +40,7 @@ function love.load()
         table.insert(icons,lg.newQuad(x*6,0,6,6,assets.image.buttons:getWidth(),assets.image.buttons:getHeight()))
     end
 
-    gs.switch(state.title)
+    gs.switch(state.menu)
 end
 
 function love.update(dt)

@@ -6,6 +6,7 @@ function menu:init()
 end
 
 function menu:enter()
+    self.time=0
     self.tScale=0
     self.rad=20
 
@@ -64,16 +65,19 @@ function menu:enter()
     self.machineMenu.len=#self.machineMenu.data
     test={x1=0,x2=0,time=0}
     self.frozen=false
-    
+    pause=require("pause")
+    pause:init("menu",self)
 end
 
 
 function menu:update(dt)
+    pause:update(dt)
     timer.update(dt)
     shader.trans:send("time",love.timer.getTime()*8)
     shader.trans:send("th",self.prog)
 
-    if not self.frozen then
+    if not self.frozen and not pause.open then
+        self.time=self.time+dt
         talkies.update(dt)
         if self.canAction then
             if talkies.isOpen() then
@@ -153,7 +157,7 @@ function menu:draw()
     local rep=math.floor(conf.gW/s)+1
     for y=0,rep do
         for x=0,rep do 
-            lg.circle("fill",(((x*s)+(-lt.getTime()*16))%(conf.gW+32))-16,(((y*s)+(-lt.getTime()*16))%(conf.gW+32))-16,math.cos(lt.getTime()*2+((x-y)*0.5))*8+8)
+            lg.circle("fill",(((x*s)+(-self.time*16))%(conf.gW+32))-16,(((y*s)+(-self.time*16))%(conf.gW+32))-16,math.cos(self.time*2+((x-y)*0.5))*8+8)
         end
     end
     --lg.draw(assets.image.bg.menuBg)
@@ -193,6 +197,8 @@ function menu:draw()
     cprint(self.machineMenu.data[self.machineMenu.select+1].name,conf.gW/2,self.machineMenu.titleY)
     talkies.draw()
     lg.setFont(font)
+
+    pause:draw()
 
     lg.setColor(0,0,0,1)
     local rad=20
