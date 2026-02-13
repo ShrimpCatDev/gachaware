@@ -39,7 +39,6 @@ function love.load()
     talkies.padding=4
     talkies.rounding=2
     talkies.messageBackgroundColor={pal:color(30)}
-    talkies.titleBackgroundColor={pal:color(10)}
     talkies.talkSound=assets.sfx.dialog
     talkies.optionSwitchSound=assets.sfx.click
 
@@ -48,17 +47,23 @@ function love.load()
         table.insert(icons,lg.newQuad(x*6,0,6,6,assets.image.buttons:getWidth(),assets.image.buttons:getHeight()))
     end
 
+    themes=require("data/themes")
     options={
         volume=1,
         musicVolume=1,
-        sfxVolume=1
+        sfxVolume=1,
+        flavor=3
     }
+    flavor=function()
+        lg.setColor(pal:color(themes[options.flavor].color))
+    end
 
     gs.switch(state.menu)
 end
 
 function love.update(dt)
     input:update()
+    talkies.titleBackgroundColor={pal:color(themes[options.flavor].color)}
 end 
 
 function love.draw()

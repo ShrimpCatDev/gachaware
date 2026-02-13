@@ -180,7 +180,7 @@ function menu:draw()
         lg.draw(i,conf.gW/2+x*i:getWidth()+self.machineMenu.sx,self.machineMenu.sy,0,1,1,i:getWidth()/2,0)
     end
 
-    lg.setColor(pal:color(6))
+    flavor()
     local m=self.gameOptionMenu
 
     lg.push()
