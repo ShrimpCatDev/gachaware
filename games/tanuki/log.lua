@@ -7,7 +7,10 @@ function load()
     spd=100
     assets.log.bg:setWrap("repeat")
     logs={}
-    timer.every(2,function()
+    tick=0
+    timer:every(1.5,function()
+        print(tick)
+        tick=0
         table.insert(logs,{x=conf.gW,y=117-14,w=16,h=14})
     end)
     local g=anim8.newGrid(11,12,assets.log.sheet:getWidth(),assets.log.sheet:getHeight())
@@ -18,6 +21,7 @@ function load()
 end
 
 function update(dt)
+    tick=tick+dt
     if not die then
         t=t+spd*dt
         for k,v in pairs(logs) do

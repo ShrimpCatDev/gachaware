@@ -13,11 +13,11 @@ return{
         gW=gw,
         gH=gh
     },
-    timer=timer,
     lerp=lerpDt,
     clamp=clamp,
     pairs=pairs,
     ipairs=ipairs,
     anim8=anim8,
-    col=collision
+    col=collision,
+    timer=timer.new()
 }

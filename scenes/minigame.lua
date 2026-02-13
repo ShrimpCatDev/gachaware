@@ -16,7 +16,6 @@ function mg:enter(prev,game,path,asts)
 
     env.time=0
     env.assets=asts
-    env.timer=require("lib.hump.timer")
 
     func()
 
@@ -43,7 +42,7 @@ function mg:update(dt)
     timer.update(dt)
 
     if not self.frozen and not pause.open then
-        env.timer.update(dt)
+        env.timer:update(dt)
         env.time=env.time+dt
         if self.timeEnable then
             self.time=self.time-dt
