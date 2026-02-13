@@ -11,6 +11,7 @@ function pause:loadMenu(type,data)
         self.items=self.menuOptions
         self.selection=1
         sfx(assets.sfx.click)
+        self.title="Options"
     end})
     if type=="menu" then
         table.insert(self.menuItems,{text="Back to title",func=function(selection)
@@ -55,13 +56,23 @@ function pause:loadOptions(type,data)
         sfx(assets.sfx.click)
     end})
     table.insert(self.menuOptions,{text="Back",func=function(selection)
-        sfx(assets.sfx.menuClose)
-        self.items=self.menuItems
-        self.selection=1
+        if type=="title" then
+            self.open=false
+            self.gy=self.dy
+            sfx(assets.sfx.menuClose)
+            self.selection=1
+        else
+            sfx(assets.sfx.menuClose)
+            self.items=self.menuItems
+            self.selection=1
+            self.title="Paused"
+        end
     end})
 end
 
 function pause:init(type,data)
+    self.title="Paused"
+    self.type=type
     self.open=false
     self.selection=1
     self.items={}
@@ -119,11 +130,22 @@ function pause:update(dt)
         end
         --input:update()
     else
-        if input:pressed("exit") then
-            self.open=true
-            self.gy=self.sy
-            input:update()
-            sfx(assets.sfx.menuOpen)
+        if input:pressed("exit") or (self.type=="title" and input:pressed("b")) then
+            if self.type=="title" then
+                self.items=self.menuOptions
+                self.open=true
+                self.gy=self.sy
+                input:update()
+                sfx(assets.sfx.menuOpen)
+                self.title="Options"
+            else
+                self.items=self.menuItems
+                self.open=true
+                self.gy=self.sy
+                input:update()
+                sfx(assets.sfx.menuOpen)
+                self.title="Paused"
+            end
         end
         --input:update()
     end
@@ -142,7 +164,7 @@ function pause:draw()
         end)
         lg.setColor(1,1,1,1)
 
-        local t="Paused"
+        local t=self.title
         lg.print(t,conf.gW/2-(fontDlg:getWidth(t)/2),conf.gH/2-(self.h/2)+1)
 
         for k,v in ipairs(self.items) do

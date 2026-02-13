@@ -17,24 +17,29 @@ function title:enter()
         end)
     end)
     music:beginMusic(assets.music.title,1)
+    pause=require("pause")
+    pause:init("title",self)
 end
 
 function title:update(dt)
+    pause:update(dt)
     timer.update(dt)
     music:update()
     shader.trans:send("time",love.timer.getTime()*8)
     shader.wave:send("time",love.timer.getTime()*2)
     shader.trans:send("th",self.prog)
 
-    if input:pressed("a") and self.canAction then
-        assets.sfx.menuOpen:stop()
-        assets.sfx.menuOpen:play()
-        self.canAction=false
-        self.prog=6
-        music:endMusic(1)
-        timer.tween(2,self,{prog=-4},"out-cubic",function()
-            gs.switch(state.menu)
-        end)
+    if not pause.open then
+        if input:pressed("a") and self.canAction then
+            assets.sfx.menuOpen:stop()
+            assets.sfx.menuOpen:play()
+            self.canAction=false
+            self.prog=6
+            music:endMusic(1)
+            timer.tween(2,self,{prog=-4},"out-cubic",function()
+                gs.switch(state.menu)
+            end)
+        end
     end
 end
 
@@ -54,6 +59,15 @@ function title:draw()
     local x,y=self.title.x,self.title.y
     local ox,oy=assets.image.title:getWidth()/2,assets.image.title:getHeight()/2
 
+    if self.showText then
+        sdraw(function()
+            cprint("press z",conf.gW/2,conf.gH/2+14)
+            lg.setFont(fontDlg)
+                cprint("press x for options",conf.gW/2,conf.gH/2+25)
+            lg.setFont(font)
+        end)
+    end
+
     lg.setShader(shader.wave)
         lg.setColor(0,0,0,0.5)
         lg.draw(assets.image.title,x+1,y+1,0,1,1,ox,oy)
@@ -61,11 +75,8 @@ function title:draw()
         lg.draw(assets.image.title,x,y,0,1,1,ox,oy)
     lg.setShader()
 
-    if self.showText then
-        sdraw(function()
-            cprint("press z",conf.gW/2,conf.gH/2+16)
-        end)
-    end
+    pause:draw()
+
 end
 
 function title:keypressed(k)
