@@ -7,6 +7,7 @@ function sfx(sound)
 end
 
 function love.load()
+    love.window.setTitle("GachaWare")
     music=require("lib/music")
     dialog=require("data/dialog")
     assets=require("lib/cargo").init("assets")
@@ -68,11 +69,11 @@ function love.update(dt)
 end 
 
 function love.draw()
-    lg.clear(pal:color(30))
+    lg.clear(pal:color(themes[options.flavor].windowBg))
     local w,h=love.window.getMode()
     local n=100
     local t=love.timer.getTime()*24
-    lg.setColor(pal:color(29))
+    lg.setColor(pal:color(themes[options.flavor].windowFg))
     for x=-1,w/n do
         for y=-1,h/n do
             if (x+y)%2==0 then

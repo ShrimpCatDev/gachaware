@@ -1,8 +1,9 @@
 return{
-    {color=6,dark=29,name="Mint",bg1=16,bg2=5},
-    {color=10,dark=25,name="Juice",bg1=18,bg2=3},
-    {color=9,dark=22,name="Coral",bg1=23,bg2=25},
-    {color=14,dark=30,name="Sky",bg1=6,bg2=5},
-    {color=13,dark=29,name="Ocean",bg1=14,bg2=6},
-    {color=4,dark=24,name="Fresh",bg1=20,bg2=19}
+    {color=6,dark=29,name="Mint",bg1=16,bg2=5,windowBg=29,windowFg=6},
+    {color=10,dark=25,name="Juice",bg1=18,bg2=3,windowBg=25,windowFg=18},
+    {color=9,dark=22,name="Coral",bg1=23,bg2=25,windowBg=30,windowFg=25},
+    {color=14,dark=30,name="Sky",bg1=6,bg2=5,windowBg=30,windowFg=14},
+    {color=13,dark=29,name="Ocean",bg1=14,bg2=6,windowBg=29,windowFg=21},
+    {color=4,dark=24,name="Fresh",bg1=20,bg2=19,windowBg=24,windowFg=20},
+    {color=6,dark=30,name="Legacy",bg1=9,bg2=10,windowBg=30,windowFg=29},
 }
