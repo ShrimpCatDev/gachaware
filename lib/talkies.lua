@@ -395,6 +395,7 @@ function Talkies.draw()
   end
 
   love.graphics.pop()
+  love.graphics.setLineWidth(1)
 
   -- Reset color so other draw operations won't be affected
   love.graphics.setColor(1, 1, 1, 1)
