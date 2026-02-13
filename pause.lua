@@ -49,6 +49,11 @@ function pause:loadOptions(type,data)
         if options.sfxVolume>1 then options.sfxVolume=0 end
         sfx(assets.sfx.click)
     end})
+    table.insert(self.menuOptions,{text="Theme:",func=function(selection)
+        options.flavor=options.flavor+1
+        if options.flavor>#themes then options.flavor=1 end
+        sfx(assets.sfx.click)
+    end})
     table.insert(self.menuOptions,{text="Back",func=function(selection)
         sfx(assets.sfx.menuClose)
         self.items=self.menuItems
@@ -84,6 +89,7 @@ function pause:update(dt)
     self.menuOptions[1].text="Volume: "..options.volume*10
     self.menuOptions[2].text="Music: "..options.musicVolume*10
     self.menuOptions[3].text="SFX: "..options.sfxVolume*10
+    self.menuOptions[4].text="Theme: "..themes[options.flavor].name
     if self.open then
         if input:pressed("exit") or input:pressed("b") then
             self.open=false

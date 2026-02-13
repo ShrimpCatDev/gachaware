@@ -159,8 +159,8 @@ function menu:update(dt)
 end
 
 function menu:draw()
-    lg.clear(pal:color(9))
-    lg.setColor(pal:color(10))
+    lg.clear(pal:color(themes[options.flavor].bg1))
+    lg.setColor(pal:color(themes[options.flavor].bg2))
     local s=16
     local rep=math.floor(conf.gW/s)+1
     for y=0,rep do

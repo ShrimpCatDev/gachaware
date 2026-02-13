@@ -64,6 +64,7 @@ end
 function love.update(dt)
     input:update()
     talkies.titleBackgroundColor={pal:color(themes[options.flavor].color)}
+    talkies.messageBackgroundColor={pal:color(themes[options.flavor].dark)}
 end 
 
 function love.draw()
