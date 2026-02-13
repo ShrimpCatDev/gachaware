@@ -6,7 +6,13 @@ function sfx(sound)
     sound:play()
 end
 
+function saveOptions()
+    local data=lume.serialize(options)
+    love.filesystem.write("options.save",data)
+end
+
 function love.load()
+    love.filesystem.setIdentity("GachaWare")
     love.window.setTitle("GachaWare")
     music=require("lib/music")
     dialog=require("data/dialog")
@@ -53,8 +59,14 @@ function love.load()
         volume=1,
         musicVolume=1,
         sfxVolume=1,
-        flavor=3
+        flavor=1
     }
+    if love.filesystem.getInfo("options.save") then
+        local file=love.filesystem.read("options.save")
+        local data=lume.deserialize(file)
+        options=data
+    end
+
     flavor=function()
         lg.setColor(pal:color(themes[options.flavor].color))
     end

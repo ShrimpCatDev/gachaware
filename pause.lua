@@ -67,6 +67,7 @@ function pause:loadOptions(type,data)
             self.selection=1
             self.title="Paused"
         end
+        saveOptions()
     end})
 end
 
@@ -107,6 +108,7 @@ function pause:update(dt)
             self.gy=self.dy
             input:update()
             sfx(assets.sfx.menuClose)
+            saveOptions()
         end
         if input:pressed("up") then
             self.selection=self.selection-1

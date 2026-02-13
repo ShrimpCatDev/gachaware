@@ -80,14 +80,7 @@ function title:draw()
 end
 
 function title:keypressed(k)
-    if k=="left" then
-        self.prog=6
-        timer.tween(3,self,{prog=-4},"out-cubic")
-    end
-    if k=="right" then
-        self.prog=-4
-        timer.tween(3,self,{prog=6},"out-cubic")
-    end
+
 end
 
 return title

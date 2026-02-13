@@ -31,3 +31,4 @@ timer=require("lib/hump/timer")
 
 talkies=require("lib/talkies")
 anim8=require("lib/anim8")
+lume=require("lib/lume")
