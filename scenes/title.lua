@@ -27,6 +27,8 @@ function title:update(dt)
     shader.trans:send("th",self.prog)
 
     if input:pressed("a") and self.canAction then
+        assets.sfx.menuOpen:stop()
+        assets.sfx.menuOpen:play()
         self.canAction=false
         self.prog=6
         music:endMusic(1)

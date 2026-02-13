@@ -83,6 +83,7 @@ function menu:update(dt)
             if talkies.isOpen() then
                 if input:pressed("a") then
                     talkies.onAction()
+                    sfx(assets.sfx.click)
                 end
             else
                 --[[if input:pressed("a") then
@@ -96,14 +97,17 @@ function menu:update(dt)
                 if self.machineMenu.selected==false then
                     if input:pressed("right") and self.machineMenu.select<self.machineMenu.len-1 then
                         self.machineMenu.select=self.machineMenu.select+1
+                        sfx(assets.sfx.click)
                     end
                     if input:pressed("left") and self.machineMenu.select>0 then
                         self.machineMenu.select=self.machineMenu.select-1
+                        sfx(assets.sfx.click)
                     end
                     if input:pressed("a") then
                         self.machineMenu.gy=self.machineMenu.selectedYPosition
                         self.machineMenu.selected=true
                         self.gameOptionMenu.select=1
+                        sfx(assets.sfx.menuOpen)
                     end
                 else
                     if input:pressed("up") then
@@ -111,21 +115,25 @@ function menu:update(dt)
                         if self.gameOptionMenu.select<1 then
                             self.gameOptionMenu.select=#self.gameOptionMenu.items
                         end
+                        sfx(assets.sfx.click)
                     end
                     if input:pressed("down") then
                         self.gameOptionMenu.select=self.gameOptionMenu.select+1
                         if self.gameOptionMenu.select>#self.gameOptionMenu.items then
                             self.gameOptionMenu.select=1
                         end
+                        sfx(assets.sfx.click)
                     end
                     if input:pressed("a") then
                         print(self.machineMenu.select+1)
                         self.gameOptionMenu.items[self.gameOptionMenu.select].func(self.machineMenu.select+1)
+                        sfx(assets.sfx.click)
                     end
 
                     if input:pressed("b") then
                         self.machineMenu.gy=self.machineMenu.defaultYPosition
                         self.machineMenu.selected=false
+                        sfx(assets.sfx.menuClose)
                     end
                 end
             end

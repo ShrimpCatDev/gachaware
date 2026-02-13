@@ -1,5 +1,11 @@
 require("init")
 
+function sfx(sound)
+    sound:stop()
+    sound:setVolume(options.sfxVolume)
+    sound:play()
+end
+
 function love.load()
     music=require("lib/music")
     dialog=require("data/dialog")
@@ -34,11 +40,18 @@ function love.load()
     talkies.rounding=2
     talkies.messageBackgroundColor={pal:color(30)}
     talkies.titleBackgroundColor={pal:color(10)}
+    talkies.talkSound=assets.sfx.dialog
+    talkies.optionSwitchSound=assets.sfx.click
 
     icons={}
     for x=0,(assets.image.buttons:getWidth()/6)-1 do
         table.insert(icons,lg.newQuad(x*6,0,6,6,assets.image.buttons:getWidth(),assets.image.buttons:getHeight()))
     end
+
+    options={
+        musicVolume=0.5,
+        sfxVolume=0.4
+    }
 
     gs.switch(state.menu)
 end

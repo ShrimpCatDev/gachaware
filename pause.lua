@@ -7,6 +7,7 @@ function pause:init(type,data)
 
     if type=="menu" then
         table.insert(self.items,{text="Back to title",func=function(selection)
+            sfx(assets.sfx.menuClose)
             data.prog=6
             timer.tween(1,data,{prog=-4},"out-cubic",function()
                 local g=data.machineMenu.data[selection].id
@@ -15,6 +16,7 @@ function pause:init(type,data)
         end})
     elseif type=="game" then
         table.insert(self.items,{text="Back to menu",func=function(selection)
+            sfx(assets.sfx.menuClose)
             data.tScale=0
             timer.tween(0.5,data,{tScale=20},"in-linear",function() 
                 gs.switch(state.menu)
@@ -24,6 +26,7 @@ function pause:init(type,data)
     table.insert(self.items,{text="Resume",func=function(selection)
         self.open=false
         self.gy=self.dy
+        sfx(assets.sfx.menuClose)
     end})
 
     self.dx=0
@@ -45,6 +48,7 @@ function pause:update(dt)
             self.open=false
             self.gy=self.dy
             input:update()
+            sfx(assets.sfx.menuClose)
         end
         if input:pressed("up") then
             self.selection=self.selection-1
@@ -52,6 +56,7 @@ function pause:update(dt)
                 self.selection=#self.items
             end
             input:update()
+            sfx(assets.sfx.click)
         end
         if input:pressed("down") then
             self.selection=self.selection+1
@@ -59,6 +64,7 @@ function pause:update(dt)
                 self.selection=1
             end
             input:update()
+            sfx(assets.sfx.click)
         end
         if input:pressed("a") then
             self.items[self.selection].func(self.selection)
@@ -70,6 +76,7 @@ function pause:update(dt)
             self.open=true
             self.gy=self.sy
             input:update()
+            sfx(assets.sfx.menuOpen)
         end
         --input:update()
     end
