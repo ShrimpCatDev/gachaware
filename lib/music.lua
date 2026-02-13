@@ -10,7 +10,7 @@ function m:beginMusic(source,duration)
 end
 
 function m:update()
-    self.song:setVolume(clamp(self.data.volume-(1-options.musicVolume),0,1))
+    self.song:setVolume(clamp((self.data.volume-(1-options.musicVolume))*options.volume,0,1))
 end
 
 function m:endMusic(duration)

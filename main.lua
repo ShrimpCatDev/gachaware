@@ -2,7 +2,7 @@ require("init")
 
 function sfx(sound)
     sound:stop()
-    sound:setVolume(options.sfxVolume)
+    sound:setVolume(clamp(options.sfxVolume*options.volume,0,1))
     sound:play()
 end
 
@@ -49,8 +49,9 @@ function love.load()
     end
 
     options={
-        musicVolume=0.5,
-        sfxVolume=0.4
+        volume=1,
+        musicVolume=1,
+        sfxVolume=1
     }
 
     gs.switch(state.menu)
