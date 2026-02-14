@@ -21,6 +21,7 @@ function pause:loadMenu(type,data)
                 --local g=data.machineMenu.data[selection].id
                 gs.switch(state.title)
             end)
+            music:endMusic(0.5)
         end})
     elseif type=="game" then
         table.insert(self.menuItems,{text="Back to menu",func=function(selection)
@@ -29,6 +30,7 @@ function pause:loadMenu(type,data)
             timer.tween(0.5,data,{tScale=20},"in-linear",function() 
                 gs.switch(state.menu)
             end)
+            music:endMusic(0.5)
         end})
     end
 end

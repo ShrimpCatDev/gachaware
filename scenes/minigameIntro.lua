@@ -32,9 +32,7 @@ function intro:enter(prev,data)--firstTime,id,win)
     if data.firstTime then
         self.gameAssets=require("lib/cargo").init("games/"..self.id.."/assets")
         self.games=getNames(self.id)
-        for k,v in ipairs(self.games) do
-            print(v)
-        end
+        music:beginMusic(self.gameAssets.bgm,1)
     else
         self.win=data.win
         env.win=data.win
@@ -56,6 +54,7 @@ function intro:enter(prev,data)--firstTime,id,win)
         end)
     else
         timer.after(2,function()
+            music:endMusic(0.5)
             timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
                 gs.switch(state.menu)
             end)
@@ -73,6 +72,7 @@ end
 
 function intro:update(dt)
     timer.update(dt)
+    music:update()
     if env.update then env.update(dt) end
 end
 

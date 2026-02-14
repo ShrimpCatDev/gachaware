@@ -46,6 +46,7 @@ function menu:enter()
                 self.frozen=true
                 self.canAction=false
                 self.prog=6
+                music:endMusic(1)
                 timer.tween(1,self,{prog=-4},"out-cubic",function()
                     local g=self.machineMenu.data[selection].id
                     gs.switch(state.minigameIntro,{firstTime=true,id=g})
@@ -67,10 +68,12 @@ function menu:enter()
     self.frozen=false
     pause=require("pause")
     pause:init("menu",self)
+    music:beginMusic(assets.music.menu,1)
 end
 
 
 function menu:update(dt)
+    music:update()
     pause:update(dt)
     timer.update(dt)
     shader.trans:send("time",love.timer.getTime()*8)
