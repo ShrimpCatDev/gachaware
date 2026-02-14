@@ -6,6 +6,7 @@ function pause:loadMenu(type,data)
         self.open=false
         self.gy=self.dy
         sfx(assets.sfx.menuClose)
+        self:fadeOut(0)
     end})
     table.insert(self.menuItems,{text="Options",func=function(selection)
         self.items=self.menuOptions
@@ -63,6 +64,7 @@ function pause:loadOptions(type,data)
             self.gy=self.dy
             sfx(assets.sfx.menuClose)
             self.selection=1
+            self:fadeOut(0)
         else
             sfx(assets.sfx.menuClose)
             self.items=self.menuItems
@@ -96,6 +98,11 @@ function pause:init(type,data)
     self.w=64
     self.gh=#self.items*(fontDlg:getHeight()+1)+16
     self.h=self.gh
+    self.fade=0
+end
+
+function pause:fadeOut(val,dur)
+    timer.tween(dur or 0.5,self,{fade=val})
 end
 
 function pause:update(dt)
@@ -111,6 +118,7 @@ function pause:update(dt)
             input:update()
             sfx(assets.sfx.menuClose)
             saveOptions()
+            self:fadeOut(0)
         end
         if input:pressed("up") then
             self.selection=self.selection-1
@@ -142,6 +150,7 @@ function pause:update(dt)
                 input:update()
                 sfx(assets.sfx.menuOpen)
                 self.title="Options"
+                self:fadeOut(0.5)
             else
                 self.items=self.menuItems
                 self.open=true
@@ -149,6 +158,7 @@ function pause:update(dt)
                 input:update()
                 sfx(assets.sfx.menuOpen)
                 self.title="Paused"
+                self:fadeOut(0.5)
             end
         end
         --input:update()
@@ -159,6 +169,10 @@ function pause:update(dt)
 end
 
 function pause:draw()
+    lg.setColor(0,0,0,self.fade)
+    lg.rectangle("fill",0,0,conf.gW,conf.gH)
+    lg.setColor(1,1,1,1)
+
     lg.push()
     lg.setFont(fontDlg)
     lg.translate(self.x,self.y)
