@@ -112,6 +112,9 @@ function menu:update(dt)
                         self.gameOptionMenu.select=1
                         sfx(assets.sfx.menuOpen)
                     end
+                    if input:pressed("b") then
+                        talkies.say("","Not available in the demo!")
+                    end
                 else
                     if input:pressed("up") then
                         self.gameOptionMenu.select=self.gameOptionMenu.select-1
@@ -204,7 +207,29 @@ function menu:draw()
         lg.setFont(font)
     lg.pop()
 
+    lg.setFont(fontDlg)
+        flavor()
+        local h=fontDlg:getHeight()+2
+        lg.push()
+        lg.translate(1,conf.gH-h-1)
+        lg.rectangle("fill",0,0,conf.gW-2,h,2,2)
+
+        lg.setColor(1,1,1,1)
+        lg.draw(assets.image.buttons,icons[1],1,2)
+        lg.print("Select",9,1)
+
+        if self.machineMenu.selected then
+            lg.draw(assets.image.buttons,icons[2],fontDlg:getWidth("Select")+12,2)
+            lg.print("Back",fontDlg:getWidth("Select")+12+8,1) 
+        else
+            lg.draw(assets.image.buttons,icons[2],fontDlg:getWidth("Select")+12,2)
+            lg.print("View trinkets",fontDlg:getWidth("Select")+12+8,1) 
+        end
+        lg.pop()
+
+        lg.setColor(1,1,1,1)
     lg.setColor(1,1,1,1)
+
     cprint(self.machineMenu.data[self.machineMenu.select+1].name,conf.gW/2,self.machineMenu.titleY)
     talkies.draw()
     lg.setFont(font)

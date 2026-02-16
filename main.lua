@@ -59,13 +59,16 @@ function love.load()
         volume=1,
         musicVolume=1,
         sfxVolume=1,
-        flavor=1
+        flavor=1,
+        fullscreen=false
     }
+    
     if love.filesystem.getInfo("options.save") then
         local file=love.filesystem.read("options.save")
         local data=lume.deserialize(file)
         options=data
     end
+    love.window.setFullscreen(options.fullscreen)
 
     flavor=function()
         lg.setColor(pal:color(themes[options.flavor].color))

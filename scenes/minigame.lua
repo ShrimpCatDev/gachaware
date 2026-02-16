@@ -1,6 +1,7 @@
 local mg={}
 
 function mg:enter(prev,game,path,asts)
+    env=nil
     shove.clearEffects("game")
     timer.clear()
     local p="games/"..path.."/"..game..".lua"
@@ -13,6 +14,7 @@ function mg:enter(prev,game,path,asts)
 
     env=require("env")
     setfenv(func,env)
+    env.timer:clear()
 
     env.time=0
     env.assets=asts
