@@ -1,6 +1,8 @@
 local title={}
 
 function title:enter()
+    collectgarbage("collect")
+    print("garbage: "..collectgarbage("count") / 1024)
     shove.clearEffects("game")
     self.showText=false
     timer.clear()
@@ -52,10 +54,12 @@ function title:draw()
     
     for x=-10,20 do
         for y=-10,20 do
-            lg.setColor(pal:color((x+y-8)%16))
+            lg.setColor(pal:color((x-y-8)%16))
             lg.circle("fill",x*sc+math.cos(t+(x+y)*0.2)*20,y*sc+math.sin(t+(x+y)*0.2)*20,10+math.sin(t+(x+y)*0.8)*5)
         end
     end
+
+    lg.setColor(1,1,1,1)
     local x,y=self.title.x,self.title.y
     local ox,oy=assets.image.title:getWidth()/2,assets.image.title:getHeight()/2
 

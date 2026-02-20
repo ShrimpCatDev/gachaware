@@ -6,6 +6,8 @@ function menu:init()
 end
 
 function menu:enter()
+    collectgarbage("collect")
+    print("garbage: "..collectgarbage("count") / 1024)
     self.time=0
     self.tScale=0
     self.rad=20
@@ -229,10 +231,12 @@ function menu:draw()
 
         lg.setColor(1,1,1,1)
     lg.setColor(1,1,1,1)
-
-    cprint(self.machineMenu.data[self.machineMenu.select+1].name,conf.gW/2,self.machineMenu.titleY)
+    
+    
     talkies.draw()
     lg.setFont(font)
+
+    cprint(self.machineMenu.data[self.machineMenu.select+1].name,conf.gW/2,self.machineMenu.titleY)
 
     pause:draw()
 

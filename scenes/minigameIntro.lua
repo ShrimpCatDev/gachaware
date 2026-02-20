@@ -56,6 +56,7 @@ function intro:enter(prev,data)--firstTime,id,win)
         timer.after(2,function()
             music:endMusic(0.5)
             timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
+                self.gameAssets=nil
                 gs.switch(state.menu)
             end)
         end)
