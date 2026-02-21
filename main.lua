@@ -11,6 +11,10 @@ function saveOptions()
     love.filesystem.write("options.save",data)
 end
 
+dev={
+    web=false
+}
+
 function love.load()
     love.filesystem.setIdentity("GachaWare")
     love.window.setTitle("GachaWare")
@@ -68,7 +72,10 @@ function love.load()
         local data=lume.deserialize(file)
         options=data
     end
-    love.window.setFullscreen(options.fullscreen)
+    
+    if not dev.web then
+        love.window.setFullscreen(options.fullscreen or false)
+    end
 
     flavor=function()
         lg.setColor(pal:color(themes[options.flavor].color))

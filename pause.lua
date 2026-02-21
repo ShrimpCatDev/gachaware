@@ -34,9 +34,11 @@ function pause:loadMenu(type,data)
             music:endMusic(0.5)
         end})
     end
-    table.insert(self.menuItems,{text="Exit game",func=function(selection)
-        love.event.quit()
-    end})
+    if not dev.web then
+        table.insert(self.menuItems,{text="Exit game",func=function(selection)
+            love.event.quit()
+        end})
+    end
 end
 
 function pause:loadOptions(type,data)
@@ -61,10 +63,12 @@ function pause:loadOptions(type,data)
         if options.flavor>#themes then options.flavor=1 end
         sfx(assets.sfx.click)
     end})
-    table.insert(self.menuOptions,{text="Toggle fullscreen",func=function(selection)
-        options.fullscreen = not options.fullscreen
-        love.window.setFullscreen(options.fullscreen)
-    end})
+    if not dev.web then
+        table.insert(self.menuOptions,{text="Toggle fullscreen",func=function(selection)
+            options.fullscreen = not options.fullscreen
+            love.window.setFullscreen(options.fullscreen)
+        end})
+    end
     table.insert(self.menuOptions,{text="Back",func=function(selection)
         if type=="title" then
             self.open=false
