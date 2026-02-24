@@ -149,11 +149,11 @@ function menu:update(dt)
 
         if self.machineMenu.selected then
             self.machineMenu.titleY=lerpDt(self.machineMenu.titleY,-8,0.00025,dt)
-            self.machineMenu.gx=-self.machineMenu.select*assets.image.gachaMachineBase:getWidth()+(assets.image.gachaMachineBase:getWidth()/2)-20
+            self.machineMenu.gx=-self.machineMenu.select*assets.image.machines.tanuki:getWidth()+(assets.image.machines.tanuki:getWidth()/2)-20
             self.gameOptionMenu.gx=1
         else
             self.machineMenu.titleY=lerpDt(self.machineMenu.titleY,4,0.00025,dt)
-            self.machineMenu.gx=-self.machineMenu.select*assets.image.gachaMachineBase:getWidth()
+            self.machineMenu.gx=-self.machineMenu.select*assets.image.machines.tanuki:getWidth()
             self.gameOptionMenu.gx=-self.gameOptionMenu.w-1
         end
 

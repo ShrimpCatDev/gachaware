@@ -29,13 +29,20 @@ function intro:enter(prev,data)--firstTime,id,win)
 
     func()
 
+    self.img=assets.image.machines[self.id]
     if data.firstTime then
         self.gameAssets=require("lib/cargo").init("games/"..self.id.."/assets")
         self.games=getNames(self.id)
         music:beginMusic(self.gameAssets.bgm,1)
+        self.lives=3
     else
         self.win=data.win
         env.win=data.win
+        if self.win then
+
+        else
+            self.lives=self.lives-1
+        end
     end
 
     self.tScale=20
@@ -47,7 +54,7 @@ function intro:enter(prev,data)--firstTime,id,win)
 
     if #self.games>=1 then
         local g=table.remove(self.games,math.random(1,#self.games))
-        timer.after(2,function()
+        timer.after(60,function()
             timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
                 gs.switch(state.minigame,g,self.id,self.gameAssets)
             end)
@@ -69,6 +76,8 @@ function intro:enter(prev,data)--firstTime,id,win)
             end)
         end)
     end)]]
+    self.screen=lg.newCanvas(78,56)
+    --9,20
 end
 
 function intro:update(dt)
@@ -79,7 +88,18 @@ end
 
 function intro:draw()
     lg.setColor(1,1,1,1)
-    if env.draw then env.draw() end
+
+    lg.clear(1,1,1,1)
+
+    local c=lg.getCanvas()
+    lg.setCanvas(self.screen)
+        lg.clear()
+        if env.draw then env.draw() end
+    lg.setCanvas(c)
+
+    local x,y=conf.gW/2-self.img:getWidth()/2,40
+    lg.draw(self.img,x,y)
+    lg.draw(self.screen,x+9,y+20)
 
     --lg.setColor(1,1,1,1)
     --pause:draw()
