@@ -33,17 +33,23 @@ function intro:enter(prev,data)--firstTime,id,win)
     if data.firstTime then
         self.gameAssets=require("lib/cargo").init("games/"..self.id.."/assets")
         self.games=getNames(self.id)
-        music:beginMusic(self.gameAssets.bgm,1)
         self.lives=3
+
+        self.musicIntro=env.assets.musicWin
     else
         self.win=data.win
         env.win=data.win
         if self.win then
-
+            self.musicIntro=env.assets.musicWin
         else
+            self.musicIntro=env.assets.musicLose
             self.lives=self.lives-1
         end
     end
+    self.musicIntroDone=false
+    self.musicEndDone=false
+    self.musicIntro:setVolume(clamp((1-(1-options.musicVolume))*options.volume,0,1))
+    self.musicIntro:play()
 
     env.firstTime=data.firstTime or false
     self.tScale=20
@@ -52,23 +58,6 @@ function intro:enter(prev,data)--firstTime,id,win)
     timer.tween(0.5,self,{tScale=0},"in-linear")
 
     if env.load then env.load() end
-
-    if #self.games>=1 then
-        local g=table.remove(self.games,math.random(1,#self.games))
-        timer.after(3,function()
-            timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
-                gs.switch(state.minigame,g,self.id,self.gameAssets)
-            end)
-        end)
-    else
-        timer.after(2,function()
-            music:endMusic(0.5)
-            timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
-                self.gameAssets=nil
-                gs.switch(state.menu)
-            end)
-        end)
-    end
     
     --[[timer.after(1,function()
         timer.tween(1,self,{tScale=self.rad},"in-linear",function()
@@ -80,20 +69,57 @@ function intro:enter(prev,data)--firstTime,id,win)
     self.screen=lg.newCanvas(78,56)
     self.livesImg=lg.newImage("assets/image/lives.png")
     --9,20
+    self.time=0
 end
 
 function intro:update(dt)
+    if (not self.musicIntroDone) and not self.musicIntro:isPlaying() then
+        self.musicIntroDone=true
+        env.assets.musicNormal:setVolume(clamp((1-(1-options.musicVolume))*options.volume,0,1))
+        env.assets.musicNormal:play()
+    end
+    if (not self.musicEndDone) and not env.assets.musicNormal:isPlaying() and not self.musicIntro:isPlaying() then
+        self.musicEndDone=true
+        if #self.games>=1 then
+            local g=table.remove(self.games,math.random(1,#self.games))
+            timer.after(0.1,function()
+                timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
+                    gs.switch(state.minigame,g,self.id,self.gameAssets)
+                end)
+            end)
+        else
+            timer.after(0.5,function()
+                music:endMusic(0.5)
+                timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
+                    self.gameAssets=nil
+                    gs.switch(state.menu)
+                end)
+            end)
+        end
+    end
+
     env.time=env.time+dt
     timer.update(dt)
     env.timer:update(dt)
     music:update()
     if env.update then env.update(dt) end
+    self.time=self.time+dt
 end
 
 function intro:draw()
     lg.setColor(1,1,1,1)
 
-    lg.clear(1,1,1,1)
+    lg.clear(pal:color(themes[options.flavor].bg1))
+    lg.setColor(pal:color(themes[options.flavor].bg2))
+    local s=16
+    local rep=math.floor(conf.gW/s)+1
+    for y=0,rep do
+        for x=0,rep do 
+            lg.circle("fill",(((x*s)+(-self.time*16))%(conf.gW+32))-16,(((y*s)+(-self.time*16))%(conf.gW+32))-16,math.cos(self.time*2+((x-y)*0.5))*8+8)
+        end
+    end
+
+    lg.setColor(1,1,1,1)
 
     local c=lg.getCanvas()
     lg.setCanvas(self.screen)
