@@ -82,7 +82,9 @@ function intro:enter(prev,data)--firstTime,id,win)
 end
 
 function intro:update(dt)
+    env.time=env.time+dt
     timer.update(dt)
+    env.timer:update(dt)
     music:update()
     if env.update then env.update(dt) end
 end
