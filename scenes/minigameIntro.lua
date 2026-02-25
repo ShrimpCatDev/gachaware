@@ -54,7 +54,7 @@ function intro:enter(prev,data)--firstTime,id,win)
 
     if #self.games>=1 then
         local g=table.remove(self.games,math.random(1,#self.games))
-        timer.after(60,function()
+        timer.after(3,function()
             timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
                 gs.switch(state.minigame,g,self.id,self.gameAssets)
             end)
@@ -77,6 +77,7 @@ function intro:enter(prev,data)--firstTime,id,win)
         end)
     end)]]
     self.screen=lg.newCanvas(78,56)
+    self.livesImg=lg.newImage("assets/image/lives.png")
     --9,20
 end
 
@@ -103,6 +104,14 @@ function intro:draw()
 
     --lg.setColor(1,1,1,1)
     --pause:draw()
+
+    local space=8
+    local w=assets.image.lives:getWidth()+space
+    local tw=self.lives*w
+    local sx=(conf.gW/2)-(tw/2)+(space/2)
+    for i=0,self.lives-1 do
+        lg.draw(assets.image.lives,sx+(i*w),6+math.cos(love.timer.getTime()*8+(i*1.2))*3)
+    end
     
     lg.setColor(0,0,0,1)
     local rad=20
