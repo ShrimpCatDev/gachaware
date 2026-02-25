@@ -45,6 +45,7 @@ function intro:enter(prev,data)--firstTime,id,win)
         end
     end
 
+    env.firstTime=data.firstTime or false
     self.tScale=20
     self.rad=20
 
