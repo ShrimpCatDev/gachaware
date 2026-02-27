@@ -33,7 +33,7 @@ function intro:enter(prev,data)--firstTime,id,win)
     if data.firstTime then
         self.gameAssets=require("lib/cargo").init("games/"..self.id.."/assets")
         self.games=getNames(self.id)
-        self.lives=3
+        self.lives=0
 
         self.musicIntro=env.assets.musicWin
     else
@@ -76,6 +76,12 @@ function intro:update(dt)
     if (not self.musicIntroDone) and not self.musicIntro:isPlaying() then
         self.musicIntroDone=true
         env.assets.musicNormal:setVolume(clamp((1-(1-options.musicVolume))*options.volume,0,1))
+        if self.lives<1 then
+            timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
+                self.gameAssets=nil
+                gs.switch(state.gameover,self.id)
+            end)
+        end
         env.assets.musicNormal:play()
     end
     if (not self.musicEndDone) and not env.assets.musicNormal:isPlaying() and not self.musicIntro:isPlaying() then

@@ -39,7 +39,8 @@ function love.load()
         title=require "scenes/title",
         menu=require "scenes/menu",
         minigame=require "scenes/minigame",
-        minigameIntro=require "scenes/minigameIntro"
+        minigameIntro=require "scenes/minigameIntro",
+        gameover=require "scenes/gameover"
     }
     shader={
         trans=lg.newShader("shaders/plasmaTransition.glsl"),
