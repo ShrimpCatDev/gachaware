@@ -33,7 +33,7 @@ function intro:enter(prev,data)--firstTime,id,win)
     if data.firstTime then
         self.gameAssets=require("lib/cargo").init("games/"..self.id.."/assets")
         self.games=getNames(self.id)
-        self.lives=0
+        self.lives=3
 
         self.musicIntro=env.assets.musicWin
     else
@@ -81,8 +81,10 @@ function intro:update(dt)
                 self.gameAssets=nil
                 gs.switch(state.gameover,self.id)
             end)
+        else
+            env.assets.musicNormal:play()
         end
-        env.assets.musicNormal:play()
+        
     end
     if (not self.musicEndDone) and not env.assets.musicNormal:isPlaying() and not self.musicIntro:isPlaying() then
         self.musicEndDone=true
