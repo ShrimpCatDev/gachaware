@@ -40,8 +40,10 @@ function love.load()
         menu=require "scenes/menu",
         minigame=require "scenes/minigame",
         minigameIntro=require "scenes/minigameIntro",
-        gameover=require "scenes/gameover"
+        gameover=require "scenes/gameover",
+        intro=require "scenes/intro"
     }
+    
     shader={
         trans=lg.newShader("shaders/plasmaTransition.glsl"),
         wave=lg.newShader("shaders/wave.glsl")

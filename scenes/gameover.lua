@@ -1,6 +1,7 @@
 local over={}
 
 function over:enter(prev,id)
+    shove.clearEffects("game")
     self.img=lg.newImage("minigameIntros/assets/"..id.."/gameover.png")
     self.fade={v=1}
     self.action=false
