@@ -38,3 +38,7 @@ function draw()
     lg.clear(0.15,0.5,1)
 end
 
+function drawOverlay()
+
+end
+

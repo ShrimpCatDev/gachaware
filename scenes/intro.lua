@@ -69,6 +69,8 @@ function intro:draw()
     lg.setColor(0,0,0,self.fade.v)
     lg.rectangle("fill",0,0,conf.gW,conf.gH)
     lg.setColor(1,1,1,1)
+
+    if env.drawOverlay then env.drawOverlay() end
     talkies.draw()
     lg.setFont(font)
 end
