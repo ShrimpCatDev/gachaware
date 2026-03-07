@@ -1,6 +1,7 @@
 local devMenu={}
 
 function devMenu:mainMenu()
+    
     self.items={}
     table.insert(self.items,{text="Go to title",func=function(selection)
         gs.switch(state.title)
@@ -9,13 +10,20 @@ function devMenu:mainMenu()
         gs.switch(state.menu)
     end})
     table.insert(self.items,{text="Test minigame",func=function(selection)
-
+        for k,v in ipairs(self.machines) do
+            print(v.id)
+        end
     end})
     table.insert(self.items,{text="Test gachapon",func=function(selection)
-
+        for k,v in ipairs(self.machines) do
+            print(v.id)
+        end
+        local g=self.machines[1].id
+        gs.switch(state.minigameIntro,{firstTime=true,id=g})
     end})
-    table.insert(self.items,{text="Toggle web mode",func=function(selection)
+    table.insert(self.items,{text="Toggle web mode ("..tostring(dev.web)..")",func=function(selection,text)
         dev.web= not dev.web
+        self.items[self.selection].text="Toggle web mode ("..tostring(dev.web)..")"
     end})
     table.insert(self.items,{text="Delete options data",func=function(selection)
         love.filesystem.remove("options.save",data)
@@ -23,9 +31,13 @@ function devMenu:mainMenu()
 end
 
 function devMenu:enter()
+    self.machines=require("data/machines")
     self.items={}
     self:mainMenu()
     self.selection=1
+    if not dev.web then
+        love.audio.stop()
+    end
 end
 
 function devMenu:update(dt)
@@ -46,7 +58,7 @@ function devMenu:update(dt)
         sfx(assets.sfx.click)
     end
     if input:pressed("a") then
-        self.items[self.selection].func(self.selection)
+        self.items[self.selection].func(self.selection,self.items[self.selection].text)
         input:update()
     end
 end

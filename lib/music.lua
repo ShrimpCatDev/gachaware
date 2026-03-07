@@ -10,13 +10,17 @@ function m:beginMusic(source,duration)
 end
 
 function m:update()
-    self.song:setVolume(clamp((self.data.volume-(1-options.musicVolume))*options.volume,0,1))
+    if self.song then
+        self.song:setVolume(clamp((self.data.volume-(1-options.musicVolume))*options.volume,0,1))
+    end
 end
 
 function m:endMusic(duration)
-    timer.tween(duration or 1,self.data,{volume=0},"in-linear",function()
-        self.song:stop()
-    end)
+    if self.song then
+        timer.tween(duration or 1,self.data,{volume=0},"in-linear",function()
+            self.song:stop()
+        end)
+    end
 end
 
 return m

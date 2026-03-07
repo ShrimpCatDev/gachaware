@@ -31,6 +31,7 @@ function pause:loadMenu(type,data)
             timer.tween(0.5,data,{tScale=20},"in-linear",function() 
                 gs.switch(state.menu)
             end)
+            
             music:endMusic(0.5)
         end})
     end

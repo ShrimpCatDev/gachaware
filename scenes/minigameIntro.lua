@@ -97,7 +97,7 @@ function intro:update(dt)
             end)
         else
             timer.after(0.5,function()
-                music:endMusic(0.5)
+
                 timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
                     self.gameAssets=nil
                     gs.switch(state.menu)
@@ -109,7 +109,6 @@ function intro:update(dt)
     env.time=env.time+dt
     timer.update(dt)
     env.timer:update(dt)
-    music:update()
     if env.update then env.update(dt) end
     self.time=self.time+dt
 end
