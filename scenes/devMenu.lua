@@ -9,10 +9,10 @@ function devMenu:mainMenu()
     table.insert(self.items,{text="Go to menu",func=function(selection)
         gs.switch(state.menu)
     end})
-    table.insert(self.items,{text="Test minigame",func=function(selection)
+    table.insert(self.items,{text="Test minigame",c1=7,c2=22,func=function(selection)
         self:gachaMinigameSelectMenu()
     end})
-    table.insert(self.items,{text="Test gachapon",func=function(selection)
+    table.insert(self.items,{text="Test gachapon",c2=29,c1=13,func=function(selection)
         --[[for k,v in ipairs(self.machines) do
             print(v.id)
         end
@@ -20,11 +20,11 @@ function devMenu:mainMenu()
         gs.switch(state.minigameIntro,{firstTime=true,id=g})]]
         self:gachaSelectMenu()
     end})
-    table.insert(self.items,{text="Toggle web mode ("..tostring(dev.web)..")",func=function(selection,text)
+    table.insert(self.items,{text="Toggle web mode ("..tostring(dev.web)..")",c1=4,c2=12,func=function(selection,text)
         dev.web= not dev.web
         self.items[self.selection].text="Toggle web mode ("..tostring(dev.web)..")"
     end})
-    table.insert(self.items,{text="Delete options data (DANGER)",func=function(selection)
+    table.insert(self.items,{text="Delete options data (DANGER)",c1=17,c2=25,func=function(selection)
         love.filesystem.remove("options.save",data)
     end})
 end
@@ -41,7 +41,7 @@ function devMenu:gachaSelectMenu()
         end})
     end
 
-    table.insert(self.items,{text="BACK",func=function(selection)
+    table.insert(self.items,{text="BACK",c1=21,c2=29,func=function(selection)
         self:mainMenu()
     end})
 end
@@ -59,7 +59,7 @@ function devMenu:gachaMinigameSelectMenu()
         end})
     end
 
-    table.insert(self.items,{text="BACK",func=function(selection)
+    table.insert(self.items,{text="BACK",c1=21,c2=29,func=function(selection)
         self:mainMenu()
     end})
 end
@@ -89,8 +89,8 @@ function devMenu:minigameMenu(id)
         end})
     end
 
-    table.insert(self.items,{text="BACK",func=function(selection)
-        self:mainMenu()
+    table.insert(self.items,{text="BACK",c1=21,c2=29,func=function(selection)
+        self:gachaMinigameSelectMenu()
     end})
 end
 
@@ -136,11 +136,11 @@ function devMenu:draw()
     local oy=fontDlg:getHeight()*3+2
     for k,v in ipairs(self.items) do
         if k==self.selection then
-            lg.setColor(pal:color(0))
+            lg.setColor(pal:color(v.c1 or 0))
             local t="-"..v.text
             lg.print(t,2,(k-1)*fontDlg:getHeight()+2+oy)
         else
-            lg.setColor(pal:color(16))
+            lg.setColor(pal:color(v.c2 or 16))
             lg.print(v.text,2,(k-1)*fontDlg:getHeight()+2+oy)
         end
     end
