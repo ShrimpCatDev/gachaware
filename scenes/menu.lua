@@ -249,4 +249,8 @@ function menu:draw()
     end
 end
 
+function menu:leave()
+    music:endMusic(1)
+end
+
 return menu

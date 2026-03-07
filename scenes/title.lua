@@ -87,4 +87,8 @@ function title:keypressed(k)
 
 end
 
+function title:leave()
+    music:endMusic(1)
+end
+
 return title

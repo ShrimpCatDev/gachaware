@@ -15,7 +15,7 @@ function devMenu:mainMenu()
 
     end})
     table.insert(self.items,{text="Toggle web mode",func=function(selection)
-
+        dev.web= not dev.web
     end})
     table.insert(self.items,{text="Delete options data",func=function(selection)
         love.filesystem.remove("options.save",data)
