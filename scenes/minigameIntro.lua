@@ -31,6 +31,10 @@ function intro:enter(prev,data)--firstTime,id,win)
 
     self.img=assets.image.machines[self.id]
     if data.firstTime then
+        if data.repeatGame then
+            self.repeatGame=data.repeatGame
+        end
+        print(self.repeatGame)
         self.gameAssets=require("lib/cargo").init("games/"..self.id.."/assets")
         self.games=getNames(self.id)
         self.lives=3
@@ -88,8 +92,14 @@ function intro:update(dt)
     end
     if (not self.musicEndDone) and not env.assets.musicNormal:isPlaying() and not self.musicIntro:isPlaying() then
         self.musicEndDone=true
-        if #self.games>=1 then
-            local g=table.remove(self.games,math.random(1,#self.games))
+        if #self.games>=1 or self.repeatGame then
+            local g=""
+            if self.repeatGame then
+                g=self.repeatGame
+            else
+                g=table.remove(self.games,math.random(1,#self.games))
+            end
+            print(g)
             timer.after(0.1,function()
                 timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
                     gs.switch(state.minigame,g,self.id,self.gameAssets)

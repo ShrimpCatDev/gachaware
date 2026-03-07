@@ -1,7 +1,7 @@
 local devMenu={}
 
 function devMenu:mainMenu()
-    
+    self.selection=1
     self.items={}
     table.insert(self.items,{text="Go to title",func=function(selection)
         gs.switch(state.title)
@@ -10,23 +10,87 @@ function devMenu:mainMenu()
         gs.switch(state.menu)
     end})
     table.insert(self.items,{text="Test minigame",func=function(selection)
-        for k,v in ipairs(self.machines) do
-            print(v.id)
-        end
+        self:gachaMinigameSelectMenu()
     end})
     table.insert(self.items,{text="Test gachapon",func=function(selection)
-        for k,v in ipairs(self.machines) do
+        --[[for k,v in ipairs(self.machines) do
             print(v.id)
         end
         local g=self.machines[1].id
-        gs.switch(state.minigameIntro,{firstTime=true,id=g})
+        gs.switch(state.minigameIntro,{firstTime=true,id=g})]]
+        self:gachaSelectMenu()
     end})
     table.insert(self.items,{text="Toggle web mode ("..tostring(dev.web)..")",func=function(selection,text)
         dev.web= not dev.web
         self.items[self.selection].text="Toggle web mode ("..tostring(dev.web)..")"
     end})
-    table.insert(self.items,{text="Delete options data",func=function(selection)
+    table.insert(self.items,{text="Delete options data (DANGER)",func=function(selection)
         love.filesystem.remove("options.save",data)
+    end})
+end
+
+function devMenu:gachaSelectMenu()
+    self.selection=1
+    self.items={}
+
+    for k,v in ipairs(self.machines) do
+        print(v.id)
+        table.insert(self.items,{text=v.id,func=function(selection)
+            local g=self.machines[selection].id
+            gs.switch(state.minigameIntro,{firstTime=true,id=g})
+        end})
+    end
+
+    table.insert(self.items,{text="BACK",func=function(selection)
+        self:mainMenu()
+    end})
+end
+
+function devMenu:gachaMinigameSelectMenu()
+    self.selection=1
+    self.items={}
+
+    for k,v in ipairs(self.machines) do
+        print(v.id)
+        table.insert(self.items,{text=v.id,func=function(selection)
+            local g=self.machines[selection].id
+            devMenu:minigameMenu(g)
+            --gs.switch(state.minigameIntro,{firstTime=true,id=g})
+        end})
+    end
+
+    table.insert(self.items,{text="BACK",func=function(selection)
+        self:mainMenu()
+    end})
+end
+
+local function getNames(path)
+    local n={}
+    local files=love.filesystem.getDirectoryItems("games/"..path)
+    
+    for k,v in ipairs(files) do
+        local name=v:match("^(.+)%.lua$")
+        table.insert(n,name)
+    end
+    return n
+end
+
+function devMenu:minigameMenu(id)
+    self.gameAssets=require("lib/cargo").init("games/"..id.."/assets")
+    local names=getNames(id)
+    self.selection=1
+    self.items={}
+
+    for k,v in ipairs(names) do
+        print(v)
+        table.insert(self.items,{text=v,func=function(selection)
+            local g=id
+            gs.switch(state.minigameIntro,{firstTime=true,id=g,repeatGame=v})
+        end})
+    end
+
+    table.insert(self.items,{text="BACK",func=function(selection)
+        self:mainMenu()
     end})
 end
 
