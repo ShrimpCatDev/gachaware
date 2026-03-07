@@ -12,7 +12,8 @@ function saveOptions()
 end
 
 dev={
-    web=false
+    web=false,
+    debug=true
 }
 
 function love.load()
@@ -41,7 +42,8 @@ function love.load()
         minigame=require "scenes/minigame",
         minigameIntro=require "scenes/minigameIntro",
         gameover=require "scenes/gameover",
-        intro=require "scenes/intro"
+        intro=require "scenes/intro",
+        dev=require "scenes/devMenu"
     }
     
     shader={
@@ -84,7 +86,11 @@ function love.load()
         lg.setColor(pal:color(themes[options.flavor].color))
     end
 
-    gs.switch(state.menu)
+    if dev.debug then
+        gs.switch(state.dev)
+    else
+        gs.switch(state.title)
+    end
 end
 
 function love.update(dt)
@@ -111,4 +117,15 @@ function love.draw()
         lg.clear(0,0,0,1)
         gs.draw()
     endDraw()
+end
+
+function love.keypressed(k)
+    if k=="f11" and not dev.web then
+        options.fullscreen = not options.fullscreen
+        love.window.setFullscreen(options.fullscreen)
+        saveOptions()
+    end
+    if dev.debug and k=="f1" then
+        gs.switch(state.dev)
+    end
 end
