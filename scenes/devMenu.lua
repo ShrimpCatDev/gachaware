@@ -24,6 +24,10 @@ function devMenu:mainMenu()
         dev.web= not dev.web
         self.items[self.selection].text="Toggle web mode ("..tostring(dev.web)..")"
     end})
+    table.insert(self.items,{text="Disable debug mode",c1=18,c2=26,func=function(selection)
+        dev.debug=false
+        gs.switch(state.title)
+    end})
     table.insert(self.items,{text="Delete options data (DANGER)",c1=17,c2=25,func=function(selection)
         love.filesystem.remove("options.save",data)
     end})
@@ -95,6 +99,7 @@ function devMenu:minigameMenu(id)
 end
 
 function devMenu:enter()
+    shove.clearEffects("game")
     self.machines=require("data/machines")
     self.items={}
     self:mainMenu()
@@ -132,7 +137,7 @@ function devMenu:draw()
     lg.setColor(pal:color(6))
     lg.print("Cool debug menu",2,2)
     lg.setColor(pal:color(10))
-    lg.print("IF YOU SEE THIS AND YOU'RE\nNOT A DEV, PLEASE LMK",2,fontDlg:getHeight()+2)
+    lg.print("If you see this and you're\nnot a dev, PLEASE LMK and GET OUT!",2,fontDlg:getHeight()+2)
     local oy=fontDlg:getHeight()*3+2
     for k,v in ipairs(self.items) do
         if k==self.selection then

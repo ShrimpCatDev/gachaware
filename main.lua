@@ -86,11 +86,11 @@ function love.load()
         lg.setColor(pal:color(themes[options.flavor].color))
     end
 
-    if dev.debug then
+    --[[if dev.debug then
         gs.switch(state.dev)
-    else
+    else]]
         gs.switch(state.title)
-    end
+    --end
 end
 
 function love.update(dt)
