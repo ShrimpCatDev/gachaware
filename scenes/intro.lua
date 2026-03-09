@@ -75,4 +75,8 @@ function intro:draw()
     lg.setFont(font)
 end
 
+function intro:leave()
+    talkies.clearMessages()
+end
+
 return intro

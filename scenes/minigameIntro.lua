@@ -31,6 +31,7 @@ function intro:enter(prev,data)--firstTime,id,win)
 
     self.img=assets.image.machines[self.id]
     if data.firstTime then
+        self.repeatGame=nil
         if data.repeatGame then
             self.repeatGame=data.repeatGame
         end

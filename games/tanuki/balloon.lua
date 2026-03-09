@@ -1,4 +1,4 @@
-msg="Pop!"
+msg="Inflate!"
 icons={3,4}
 color=21
 
