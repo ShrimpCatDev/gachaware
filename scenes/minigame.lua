@@ -52,6 +52,7 @@ function mg:update(dt)
                 self.frozen=true
                 self.tScale=0
                 timer.tween(0.5,self,{tScale=self.rad},"in-linear",function() 
+                    if env.leave then env.leave() end
                     gs.switch(state.minigameIntro,{firstTime=false,win=env.win})
                 end)
             end

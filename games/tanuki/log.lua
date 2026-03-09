@@ -18,6 +18,8 @@ function load()
     pl.current=pl.anim
     win=true
     die=false
+    assets.actionBg:setLooping(true)
+    msc(assets.actionBg,0.5)
 end
 
 function update(dt)
@@ -29,18 +31,20 @@ function update(dt)
             if col(v.x,v.y,pl.x,pl.y,v.w,v.h,pl.w,pl.h) then
                 die=true
                 win=false
-                pl.vy=-50
+                pl.vy=-150
                 pl.current=pl.die
+                sfx(assets.log.die)
             end
         end
     end
-    pl.vy=pl.vy+200*dt
+    pl.vy=pl.vy+400*dt
     pl.y=pl.y+pl.vy*dt
     if pl.y>=117-12 then
         pl.vy=0
         pl.y=117-12
         if input:pressed("a") and not die then
-            pl.vy=-100
+            pl.vy=-150
+            sfx(assets.log.jump)
         end
     end
     pl.current:update(dt)
@@ -55,4 +59,8 @@ function draw()
         lg.draw(assets.log.log,v.x,v.y)
     end
     pl.current:draw(assets.log.sheet,pl.x,pl.y)
+end
+
+function leave()
+    assets.actionBg:stop()
 end

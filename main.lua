@@ -6,6 +6,14 @@ function sfx(sound)
     sound:play()
 end
 
+--(1-options.musicVolume))*options.volume
+
+function msc(sound,vol)
+    sound:stop()
+    sound:setVolume(clamp(options.musicVolume*options.volume-(vol or 0),0,1))
+    sound:play()
+end
+
 function saveOptions()
     local data=lume.serialize(options)
     love.filesystem.write("options.save",data)
@@ -13,7 +21,8 @@ end
 
 dev={
     web=false,
-    debug=true
+    debug=true,
+    skipIntro=true
 }
 
 function love.load()
@@ -71,6 +80,7 @@ function love.load()
         flavor=1,
         fullscreen=false
     }
+    defaultOptions=options
     
     if love.filesystem.getInfo("options.save") then
         local file=love.filesystem.read("options.save")

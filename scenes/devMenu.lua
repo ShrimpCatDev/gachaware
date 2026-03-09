@@ -24,12 +24,17 @@ function devMenu:mainMenu()
         dev.web= not dev.web
         self.items[self.selection].text="Toggle web mode ("..tostring(dev.web)..")"
     end})
+    table.insert(self.items,{text="Skip minigame intro ("..tostring(dev.skipIntro)..")",c1=3,c2=10,func=function(selection,text)
+        dev.skipIntro= not dev.skipIntro
+        self.items[self.selection].text="Skip minigame intro ("..tostring(dev.skipIntro)..")"
+    end})
     table.insert(self.items,{text="Disable debug mode",c1=18,c2=26,func=function(selection)
         dev.debug=false
         gs.switch(state.title)
     end})
     table.insert(self.items,{text="Delete options data (DANGER)",c1=17,c2=25,func=function(selection)
         love.filesystem.remove("options.save",data)
+        options=defaultOptions
     end})
 end
 

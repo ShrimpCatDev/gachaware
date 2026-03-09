@@ -19,5 +19,7 @@ return{
     ipairs=ipairs,
     anim8=anim8,
     col=collision,
-    timer=timer.new()
+    timer=timer.new(),
+    sfx=sfx,
+    msc=msc
 }

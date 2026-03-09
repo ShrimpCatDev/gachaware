@@ -19,16 +19,20 @@ function load()
         rad=5
     }
     maxPumps=8
+    assets.balloon.inflate:setPitch(3)
 end
 
 function update(dt)
     if pumps<maxPumps then
         if input:pressed("up") and pl.img==2 then
             pl.img=1
-            pumps=pumps+1
+            
+            
         end
         if input:pressed("down") and pl.img==1 then
             pl.img=2
+            sfx(assets.balloon.inflate)
+            pumps=pumps+1
         end
     else
         win=true
