@@ -13,12 +13,12 @@ conf.vsync=true
 
 conf.input={
     controls={
-        a={"key:z"},
-        b={"key:x"},
-        up={"key:up"},
-        down={"key:down"},
-        left={"key:left"},
-        right={"key:right"},
+        a={"key:z","key:j"},
+        b={"key:x","key:k"},
+        up={"key:up","key:w"},
+        down={"key:down","key:s"},
+        left={"key:left","key:a"},
+        right={"key:right","key:d"},
         exit={"key:escape","key:return"}
     },
     pairs={
