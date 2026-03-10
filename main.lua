@@ -52,7 +52,8 @@ function love.load()
         minigameIntro=require "scenes/minigameIntro",
         gameover=require "scenes/gameover",
         intro=require "scenes/intro",
-        dev=require "scenes/devMenu"
+        dev=require "scenes/devMenu",
+        splash=require "splash"
     }
     
     shader={
@@ -99,7 +100,7 @@ function love.load()
     --[[if dev.debug then
         gs.switch(state.dev)
     else]]
-        gs.switch(state.title)
+        gs.switch(state.splash)
     --end
 end
 
