@@ -26,6 +26,7 @@ dev={
 }
 
 function love.load()
+    math.randomseed(love.math.random(0,9999))
     love.filesystem.setIdentity("GachaWare")
     love.window.setTitle("GachaWare")
     music=require("lib/music")
@@ -97,11 +98,7 @@ function love.load()
         lg.setColor(pal:color(themes[options.flavor].color))
     end
 
-    --[[if dev.debug then
-        gs.switch(state.dev)
-    else]]
-        gs.switch(state.splash)
-    --end
+    gs.switch(state.splash)
 end
 
 function love.update(dt)

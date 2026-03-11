@@ -104,6 +104,7 @@ function devMenu:minigameMenu(id)
 end
 
 function devMenu:enter()
+    timer.clear()
     shove.clearEffects("game")
     self.machines=require("data/machines")
     self.items={}
