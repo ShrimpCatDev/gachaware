@@ -107,4 +107,8 @@ function mg:draw()
     lg.setColor(1,1,1,1)
 end
 
+function mg:leave()
+    if env.leave then env.leave() end
+end
+
 return mg

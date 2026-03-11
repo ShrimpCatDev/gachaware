@@ -8,9 +8,10 @@ function load()
     local i=assets.flash.tanuki
     ta={x=i:getWidth()-16,out=false}
     timer:after(math.random(1,3)/2,function()
+        ta.out=true
         timer:tween(0.5,ta,{x=0},"out-cubic",function()
-            ta.out=true
-            timer:after(2,function()
+            
+            timer:after(1,function()
                 if not win then
                     ta.out=false
                     timer:tween(0.5,ta,{x=i:getWidth()},"out-cubic")

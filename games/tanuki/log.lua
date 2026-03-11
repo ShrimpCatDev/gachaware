@@ -8,7 +8,7 @@ function load()
     assets.log.bg:setWrap("repeat")
     logs={}
     tick=0
-    timer:every(1.5,function()
+    timer:every(math.random(9,15)*0.1,function()
         print(tick)
         tick=0
         table.insert(logs,{x=conf.gW,y=117-14,w=16,h=14})

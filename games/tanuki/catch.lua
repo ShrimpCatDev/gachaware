@@ -22,6 +22,8 @@ function load()
         dx=0,
         dy=0
     }
+    assets.catch.woosh:setLooping(true)
+    msc(assets.catch.woosh)
 end
 
 function update(dt)
@@ -42,6 +44,7 @@ function update(dt)
         if col(para.x,para.y,pillow.x,pillow.y+pillow.w/2,para.w,para.h,pillow.w,pillow.h/2) and para.y<pillow.y+pillow.w/2 then
             para.mode="land"
             win=true
+            sfx(assets.catch.win)
         end
     else
         para.r=lerp(para.r,0,0.00001,dt)
@@ -60,5 +63,5 @@ function draw()
 end
 
 function leave()
-
+    assets.catch.woosh:stop()
 end
