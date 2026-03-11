@@ -20,6 +20,8 @@ function load()
     }
     maxPumps=8
     assets.balloon.inflate:setPitch(3)
+    assets.countBg:setLooping(true)
+    msc(assets.countBg)
 end
 
 function update(dt)
@@ -56,4 +58,8 @@ function draw()
     lg.setColor(pal:color(25))
     lg.circle("line",b.x,b.y-r+y,r)
     lg.setColor(1,1,1,1)
+end
+
+function leave()
+    assets.countBg:stop()
 end
