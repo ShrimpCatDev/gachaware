@@ -44,10 +44,10 @@ function mg:update(dt)
     timer.update(dt)
 
     if not self.frozen and not pause.open then
-        env.timer:update(dt)
-        env.time=env.time+dt
+        env.timer:update(dt*speedup)
+        env.time=env.time+dt*speedup
         if self.timeEnable then
-            self.time=self.time-dt
+            self.time=self.time-dt*speedup
             if self.time<=0 then
                 self.frozen=true
                 self.tScale=0
@@ -57,7 +57,7 @@ function mg:update(dt)
                 end)
             end
         end
-        if env.update then env.update(dt) end
+        if env.update then env.update(dt*speedup) end
     end
 end
 

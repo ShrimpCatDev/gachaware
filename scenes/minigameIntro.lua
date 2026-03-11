@@ -53,6 +53,7 @@ function intro:enter(prev,data)--firstTime,id,win)
     end
     self.musicIntroDone=false
     self.musicEndDone=false
+    self.musicIntro:setPitch(speedup)
     self.musicIntro:setVolume(clamp((1-(1-options.musicVolume))*options.volume,0,1))
     self.musicIntro:play()
 
@@ -80,6 +81,7 @@ end
 function intro:update(dt)
     if (not self.musicIntroDone) and not self.musicIntro:isPlaying() then
         self.musicIntroDone=true
+        env.assets.musicNormal:setPitch(speedup)
         env.assets.musicNormal:setVolume(clamp((1-(1-options.musicVolume))*options.volume,0,1))
         if self.lives<1 then
             timer.tween(0.5,self,{tScale=self.rad},"in-linear",function()
@@ -117,11 +119,12 @@ function intro:update(dt)
         end
     end
 
-    env.time=env.time+dt
+    env.time=env.time+dt*speedup
     timer.update(dt)
     env.timer:update(dt)
-    if env.update then env.update(dt) end
-    self.time=self.time+dt
+    if env.update then env.update(dt*speedup) end
+    self.time=self.time+dt*speedup
+    
 end
 
 function intro:draw()
@@ -157,7 +160,7 @@ function intro:draw()
     local tw=self.lives*w
     local sx=(conf.gW/2)-(tw/2)+(space/2)
     for i=0,self.lives-1 do
-        lg.draw(assets.image.lives,sx+(i*w),6+math.cos(love.timer.getTime()*8+(i*1.2))*3)
+        lg.draw(assets.image.lives,sx+(i*w),6+math.cos(love.timer.getTime()*speedup*8+(i*1.2))*3)
     end
     
     lg.setColor(0,0,0,1)

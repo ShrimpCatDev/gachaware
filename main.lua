@@ -9,6 +9,7 @@ end
 --(1-options.musicVolume))*options.volume
 
 function msc(sound,vol)
+    sound:setPitch(speedup)
     sound:stop()
     sound:setVolume(clamp(options.musicVolume*options.volume-(vol or 0),0,1))
     sound:play()
@@ -26,6 +27,7 @@ dev={
 }
 
 function love.load()
+    speedup=1
     math.randomseed(love.math.random(0,9999))
     love.filesystem.setIdentity("GachaWare")
     love.window.setTitle("GachaWare")
