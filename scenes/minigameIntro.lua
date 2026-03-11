@@ -38,7 +38,7 @@ function intro:enter(prev,data)--firstTime,id,win)
         print(self.repeatGame)
         self.gameAssets=require("lib/cargo").init("games/"..self.id.."/assets")
         self.games=getNames(self.id)
-        self.lives=3
+        self.lives=1
 
         self.musicIntro=env.assets.musicWin
     else
@@ -93,7 +93,7 @@ function intro:update(dt)
         end
         
     end
-    if (not self.musicEndDone) and not env.assets.musicNormal:isPlaying() and not self.musicIntro:isPlaying() then
+    if (not self.musicEndDone) and not env.assets.musicNormal:isPlaying() and not self.musicIntro:isPlaying() and self.lives>0 then
         self.musicEndDone=true
         if #self.games>=1 or self.repeatGame then
             local g=""
