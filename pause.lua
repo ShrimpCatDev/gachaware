@@ -35,6 +35,9 @@ function pause:loadMenu(type,data)
             music:endMusic(0.5)
         end})
     end
+    table.insert(self.menuItems,{text="Join discord server!",func=function(selection)
+        love.system.openURL("https://discord.gg/Ub2TDbKfnY")
+    end})
     if not dev.web then
         table.insert(self.menuItems,{text="Exit game",func=function(selection)
             love.event.quit()

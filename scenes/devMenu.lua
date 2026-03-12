@@ -13,11 +13,6 @@ function devMenu:mainMenu()
         self:gachaMinigameSelectMenu()
     end})
     table.insert(self.items,{text="Test gachapon",c2=29,c1=13,func=function(selection)
-        --[[for k,v in ipairs(self.machines) do
-            print(v.id)
-        end
-        local g=self.machines[1].id
-        gs.switch(state.minigameIntro,{firstTime=true,id=g})]]
         self:gachaSelectMenu()
     end})
     table.insert(self.items,{text="Toggle web mode ("..tostring(dev.web)..")",c1=4,c2=12,func=function(selection,text)
