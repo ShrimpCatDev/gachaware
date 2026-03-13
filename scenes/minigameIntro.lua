@@ -38,7 +38,7 @@ function intro:enter(prev,data)--firstTime,id,win)
         print(self.repeatGame)
         self.gameAssets=require("lib/cargo").init("games/"..self.id.."/assets")
         self.games=getNames(self.id)
-        self.lives=1
+        self.lives=3
 
         self.musicIntro=env.assets.musicWin
     else
