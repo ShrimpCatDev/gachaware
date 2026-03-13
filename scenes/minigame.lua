@@ -12,6 +12,7 @@ function mg:enter(prev,game,path,asts)
     func,err=loadstring(code)
     if not func then error(err) end
 
+    if env then env.timer=nil end
     env=require("env")
     setfenv(func,env)
     env.timer:clear()
