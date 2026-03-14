@@ -56,7 +56,8 @@ function love.load()
         gameover=require "scenes/gameover",
         intro=require "scenes/intro",
         dev=require "scenes/devMenu",
-        splash=require "splash"
+        splash=require "splash",
+        click=require "scenes/click"
     }
     
     shader={
@@ -100,7 +101,12 @@ function love.load()
         lg.setColor(pal:color(themes[options.flavor].color))
     end
 
-    gs.switch(state.splash)
+    if dev.web then
+        gs.switch(state.click)
+    else
+        gs.switch(state.splash)
+    end
+    
 end
 
 function love.update(dt)
