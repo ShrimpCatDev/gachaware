@@ -22,7 +22,7 @@ conf.input={
         exit={"key:escape","key:return"}
     },
     pairs={
-
+        
     },
     joystick = love.joystick.getJoysticks()[1],
 }
